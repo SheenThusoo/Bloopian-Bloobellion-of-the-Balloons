@@ -1,0 +1,143 @@
+import java.awt.*;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.*; 
+
+public class UFO {
+  
+  private int x = 20;
+  private int y = 20;
+  private int xa = 0; //Horizontal speed
+  private int ya = 0; //Vertical speed
+  private CityScape ba;
+  private CAR carn;
+  private static final int DIAMETER = 50; 
+  private boolean space = false;
+  
+  public UFO(CityScape ba, int x, int y, CAR carn) 
+  {
+    this.ba = ba;
+    this.x = x;
+    this.y = y;
+    this.carn = carn;
+  }
+  
+  public void keyReleased(KeyEvent e) 
+  {
+    xa = 0;
+    ya = 0;
+    space = false;
+    
+  }
+  
+  public void keyPressed(KeyEvent e) 
+  {
+    if (e.getKeyCode() == KeyEvent.VK_LEFT)
+      xa = -2;
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+      xa = 2;
+    if (e.getKeyCode() == KeyEvent.VK_UP)
+      ya = -2;
+    if (e.getKeyCode() == KeyEvent.VK_DOWN)
+      ya = 2;
+    if (e.getKeyCode() == KeyEvent.VK_SPACE)
+    {
+      space = true;
+    }
+  }
+  
+  public void move()
+  {
+    if ((x + xa < 0) || (x + xa > ba.getWidth() - DIAMETER - 100))
+    {
+      xa *= -1;
+    }
+    if ((y + ya < 20) || (y + ya > ba.getHeight() - DIAMETER - 500))
+    {
+      ya *= -1;
+    }
+    
+    x = x + xa;
+    y = y + ya;
+    
+    if ((x <= carn.x + 90) && (x >= carn.x+10) && (space) )
+    {
+      carn.lift = true;
+      if ((y + 10) == carn.y)
+      {
+       carn.x = -100;
+       carn.y = -100;
+      }
+    }
+    else
+    {
+      carn.lift = false;
+      carn.y = 749;
+    }
+    
+  }
+  
+  public void collision(UFO b) 
+  {
+    int dx = (x - b.x) + (xa - b.xa);
+    int dy = (y - b.y) + (ya - b.ya);
+    
+    //if the balls collide...
+    if (Math.sqrt(dx*dx + dy*dy) <= DIAMETER)
+      
+    {
+      //switch velocities
+      int tempxa = xa;
+      int tempya = ya;
+      xa = b.xa;
+      ya = b.ya;
+      b.xa = tempxa;
+      b.ya = tempya;
+    }
+  }
+  
+  public void paint(Graphics g2d) {
+    
+    if(space)
+    {
+      //Color customColor = new Color(244, 255, 250);
+      int alpha = 200; // 50% transparent
+      Color customColor = new Color(255, 255, 250, alpha);
+      g2d.setColor(customColor);
+      g2d.fillRect(x + 10, y + 20, 80, 1000);
+    }
+    
+    g2d.setColor(Color.yellow);
+    g2d.fillOval(x + 25, y - 15, 50, 50);
+    g2d.setColor(Color.magenta);
+    g2d.fillOval(x + 37, y - 10, 25, 20);
+    g2d.setColor(Color.black);
+    g2d.fillOval(x + 43, y - 6, 5, 5);
+    g2d.fillOval(x + 50, y - 6, 5, 5);
+    g2d.setColor(Color.gray);
+    g2d.fillOval(x, y, 100, 35);
+    
+    if(Math.random() > 0.7)
+    {
+      g2d.setColor(Color.white);
+    }
+    else
+    {
+      g2d.setColor(Color.green);
+    }
+    
+    g2d.fillOval(x + 12, y + 10, 20, 15);
+    g2d.fillOval(x + 70, y + 10, 20, 15);
+    
+    if(Math.random() > 0.7)
+    {
+      g2d.setColor(Color.white);
+    }
+    else
+    {
+      g2d.setColor(Color.red);
+    }
+    g2d.fillOval(x + 40, y + 10, 20, 15);
+  }
+} 
