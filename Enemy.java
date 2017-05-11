@@ -14,11 +14,6 @@ public abstract class Enemy {
 
 }
   public abstract void paint (Graphics g) {
- // super.paint(g);
-  Graphics2D g2d = (Graphics2D) g;
-  g2d.setColor(Color.lightGray);
-  g2d.fillRect(0, 0, 1020, 640);
-  parcel = new Parcel(); 
-  parcel.paint(g2d);
+ 
   }
 }
