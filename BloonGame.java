@@ -9,7 +9,9 @@ import java.awt.event.KeyListener;
 
 public class BloonGame extends JPanel 
 {
-  
+  public int lives; 
+  public int money; 
+  public int roundNumber;
   
   /*
   public CityScape() {
