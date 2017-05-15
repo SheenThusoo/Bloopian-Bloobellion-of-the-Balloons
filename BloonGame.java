@@ -45,7 +45,12 @@ public class BloonGame extends JPanel
     //Background
     Color customColor = new Color(0, 0, 51);
     g2d.setColor(customColor);
-    g2d.fillRect(0, 0, 1100, 700);
+    g2d.fillRect(0, 0, 1100, 750);
+    
+    g2d.setColor(Color.white);
+    g2d.fillRect(30, 30, 50, 50);
+    g2d.fillRect(0, 550, 1100, 200);
+    
   }
   
   public static void main(String[] args) throws InterruptedException 
@@ -53,7 +58,7 @@ public class BloonGame extends JPanel
     JFrame frame = new JFrame("BloonGame");
     //Add our JPanel to the frame
     frame.add(new BloonGame());
-    frame.setSize(1300, 800);
+    frame.setSize(1100, 750);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
