@@ -9,10 +9,8 @@ import java.awt.event.KeyListener;
 
 public class BloonGame extends JPanel 
 {
-  public int lives; 
-  public int money; 
-  public int roundNumber;
-  private RookieBalloon r= new RookieBalloon(this);
+  
+  Map myMap = new Map();
   /*
   public CityScape() {
     addKeyListener(new KeyListener() {
@@ -34,7 +32,7 @@ public class BloonGame extends JPanel
   
   public void move() 
   {
-       r.move();
+    
   }
   
   @Override
@@ -50,9 +48,10 @@ public class BloonGame extends JPanel
     g2d.fillRect(0, 0, 1100, 750);
     
     g2d.setColor(Color.white);
-    g2d.fillRect(30, 30, 50, 50);
-    g2d.fillRect(0, 550, 1100, 200);
-       r.paint(g2d);
+    myMap.paint(g2d);
+    //g2d.fillRect(30, 30, 50, 50);
+    //g2d.fillRect(0, 550, 1100, 200);
+    
   }
   
   public static void main(String[] args) throws InterruptedException 
