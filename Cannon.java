@@ -7,7 +7,11 @@ import javax.swing.*;
 
 public abstract class Cannon extends Tower
 {
-  public Cannon()
+  public Cannon(BloonGame bg)
+  {
+    this.bg = bg;
+  }
+   public void paint(Graphics g)
   {
     
   }
