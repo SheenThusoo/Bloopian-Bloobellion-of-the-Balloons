@@ -7,7 +7,11 @@ import javax.swing.*;
 
 public abstract class SpikeTower extends Tower
 {
-  public SpikeTower() 
+  public SpikeTower(BloonGame bg) 
+  {
+    this.bg = bg;
+  }
+   public void paint(Graphics g)
   {
     
   }
