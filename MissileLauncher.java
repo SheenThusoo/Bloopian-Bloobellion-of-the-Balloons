@@ -7,7 +7,11 @@ import javax.swing.*;
 
 public abstract class MissileLauncher extends Tower
 {
-  public MissileLauncher() 
+  public MissileLauncher(BloonGame bg) 
+  {
+    this.bg = bg;
+  }
+   public void paint(Graphics g)
   {
     
   }
