@@ -33,6 +33,11 @@ public class BloonGame extends JPanel
   
   Map myMap = new Map(easy);
   
+  private RookieBalloon    r = new RookieBalloon(this);
+  private AthleticBalloon  a = new AthleticBalloon(this);
+  private IceBalloon       i = new IceBalloon(this);
+  private CommanderBalloon c = new CommanderBalloon(this);
+  
   /*
   public CityScape() {
     addKeyListener(new KeyListener() {
@@ -54,7 +59,10 @@ public class BloonGame extends JPanel
   
   public void move() 
   {
-    
+    r.move();
+    a.move();
+    i.move();
+    c.move();
   }
   
   @Override
@@ -73,7 +81,10 @@ public class BloonGame extends JPanel
     myMap.paint(g2d);
     //g2d.fillRect(30, 30, 50, 50);
     //g2d.fillRect(0, 550, 1100, 200);
-    
+    r.paint(g2d);
+    a.paint(g2d);
+    i.paint(g2d);
+    c.paint(g2d);
   }
   
   public static void main(String[] args) throws InterruptedException 
