@@ -7,7 +7,11 @@ import javax.swing.*;
 
 public abstract class MoneyCreator extends Tower
 {
-  public MoneyCreator()
+  public MoneyCreator(BloonGame bg)
+  {
+    this.bg = bg;
+  }
+   public void paint(Graphics g)
   {
     
   }
