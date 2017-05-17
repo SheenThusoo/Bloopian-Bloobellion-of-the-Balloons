@@ -7,10 +7,13 @@ import javax.swing.*;
 
 public abstract class SimpleTower extends Tower
 {
-  public SimpleTower()
+  public SimpleTower(BloonGame bg)
+  {
+    this.bg = bg;
+  }
+   public void paint(Graphics g)
   {
     
   }
 }
-  
   
