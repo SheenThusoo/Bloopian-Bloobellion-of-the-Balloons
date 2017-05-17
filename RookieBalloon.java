@@ -26,7 +26,7 @@ public  void move()
 }
   public  void paint (Graphics g)
   {
-  g.drawImage(img, x, 470, null);
+  g.drawImage(img, x, 400, null);
   }
 
 } 
