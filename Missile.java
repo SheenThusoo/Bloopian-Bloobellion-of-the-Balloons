@@ -6,14 +6,17 @@ import java.io.*;
 
 public abstract class Missile extends Ammunition
 {
-  
+  public Missile(BloonGame bg) 
+  { 
+   this.bg = bg;
+  }
   
   public void move()
   {
     
   }
   
-  public void paint()
+  public void paint(Graphics g)
   {
     
   }
