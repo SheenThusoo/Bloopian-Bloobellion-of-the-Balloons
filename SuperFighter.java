@@ -7,10 +7,13 @@ import javax.swing.*;
 
 public abstract class SuperFighter extends Tower
 {
-  public SuperFighter()
+  public SuperFighter(BloonGame bg)
+  {
+    this.bg = bg;
+  }
+   public void paint(Graphics g)
   {
     
   }
-  
   
 }
