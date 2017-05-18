@@ -1,3 +1,4 @@
+import java.awt.*;
 public class Map
 {
   private int[][] m; 
