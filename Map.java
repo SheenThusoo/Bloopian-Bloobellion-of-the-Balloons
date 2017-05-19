@@ -1,4 +1,7 @@
+import java.io.*;
 import java.awt.*;
+import javax.swing.*;
+
 public class Map
 {
   private int[][] m; 
@@ -15,11 +18,11 @@ public class Map
     {
       for (int i = 0; i < 11; i++){
         for (int j = 0; j < 22; j++){
-          if (m[i][j] == 1)
+          if (m[i][j] == 0)
           {
-            g.setColor(path);
-          }else {
             g.setColor(grass);
+          }else {
+            g.setColor(path);
         }
           g.fillRect(j * 50, i * 50, 50, 50);
         }
