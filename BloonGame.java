@@ -35,6 +35,8 @@ public class BloonGame extends JPanel
   
   Map myMap = new Map(easy);
   
+  EnemyTrial ene = new EnemyTrial(easy);
+  
   /*
   public CityScape() {
     addKeyListener(new KeyListener() {
@@ -56,7 +58,7 @@ public class BloonGame extends JPanel
   
   public void move() 
   {
-    
+    ene.move();
   }
   
   @Override
@@ -70,11 +72,9 @@ public class BloonGame extends JPanel
     Color customColor = new Color(0, 0, 51);
     g2d.setColor(customColor);
     g2d.fillRect(0, 0, 1100, 750);
-    
-    g2d.setColor(Color.white);
+
     myMap.paint(g2d);
-    //g2d.fillRect(30, 30, 50, 50);
-    //g2d.fillRect(0, 550, 1100, 200);
+    ene.paint(g2d);
     
   }
   
