@@ -10,11 +10,12 @@ public class EnemyTrial {
   private ImageObserver observer = null;
   private int x = 0;
   private int y = 350;
-  private int ax = 7;
-  private int ay = 0;
+  private int arrayX = 0;
+  private int arrayY = 7;
   private int xa;
   private int ya;
   private int count = 50;
+  private int speed = 10;
   
   
   private int[][] path; 
@@ -26,7 +27,7 @@ public class EnemyTrial {
     
     
     try {
-      img = ImageIO.read(new File("balloonred.png"));
+      img = ImageIO.read(new File("athleticballoon.png"));
     } catch (IOException e) {
       System.out.println(e);
     }
@@ -35,33 +36,43 @@ public class EnemyTrial {
   
   public void move(){
     
-    if(count % 50 ==0)
+    if(count == 50)
     {
-      if (path[ax][ay] == 1)
+      count = 0;
+      if (path[arrayY][arrayX] == 1) //left
       {
-        xa = -1;
-        ax -= 1;
-      } else if (path[ax][ay] == 2){
-        xa = 1;
-        ax += 1;
-      } else if (path[ax][ay] ==3){
-        ya = -1;
-        ay += 1;
-      } else if (path[ax][ay] == 4){
-        ya = 1;
-        ay -= 1;
+        xa = -speed;
+        ya = 0;
+        arrayX -= 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
+      } else if (path[arrayY][arrayX] == 2){ //right
+        xa = speed;
+        ya = 0;
+        arrayX += 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
+      } else if (path[arrayY][arrayX] == 3){ //up
+        ya = -speed;
+        xa = 0;
+        arrayY -= 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
+      } else if (path[arrayY][arrayX] == 4){ //down
+        ya = speed;
+        xa = 0;
+        arrayY += 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
       } else {
       }
     }
     else
-    {}
-    
-    count ++;
-    
-    //for (int i = 0; i < 50; i++){
-    x = x + xa; 
-    y = y + ya;
-    //}
+    {
+      x = x + xa; 
+      y = y + ya;
+      count += speed;
+    }
     
   }
   
