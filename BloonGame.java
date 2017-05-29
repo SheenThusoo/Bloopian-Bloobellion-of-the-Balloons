@@ -22,7 +22,7 @@ public class BloonGame extends JPanel
     {2,2,3,0,0,4,0,3,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
     {0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0},
     {0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} };
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
   
   private int[][] medium = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -53,7 +53,7 @@ public class BloonGame extends JPanel
   
   Map myMap = new Map(easy);
   
-  EnemyTrial ene = new EnemyTrial(easy);
+  RookieBalloon ene = new RookieBalloon(easy, 'e');
   
   /*
   public CityScape() {
