@@ -4,26 +4,25 @@ import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
 
-public class AthleticBalloon extends Enemy { 
-  public AthleticBalloon(BloonGame bg){ 
-    this.bg = bg;
-  } 
-} 
+public class AthleticBalloon extends Enemy 
+{ 
+  private int [][]path;
+  private int diff;
+  
+  public AthleticBalloon(int [][] path, char diff) 
+  { 
+    super(path, diff, 'a', 5);
+  }
 
-public  void move() {
-    if (x + xa < 0)
-      xa = 1;
-    if (x + xa > 800 - 50)
-      xa = -1;
-    if (y + ya < 0)
-      ya = 1;
-    if (y + ya > 175 - 50)
-      ya = -1;
-    x = x + xa;
-    y = y + ya;
-}
-  public  void paint (Graphics g) {
-     g.drawImage(img, x, 300, null);
+  public void move()
+  {
+    super.move();
+  }
+
+  public void paint (Graphics g)
+  {
+    Graphics2D g2d = (Graphics2D) g;
+    super.paint(g2d);
   }
 
 } 
