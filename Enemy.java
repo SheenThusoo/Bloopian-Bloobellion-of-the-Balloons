@@ -1,45 +1,112 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import javax.imageio.*;
 import java.io.*;
 
-public abstract class Enemy { 
-  public abstract int speed; 
-  public abstract int x; 
-  public abstract int y; 
-  public int xa=1;
-  public int ya=1;
-  public BufferedImage img; 
-  public BloonGame bg;
+public abstract class Enemy {
   
- public Enemy(BloonGame bg, int speed, int x, int y){
-    this.bg = bg;
+  private BufferedImage img = null;
+  private ImageObserver observer = null;
+  private int x = 0;
+  private int y; //y's depend on map chosen
+  private int arrayX = 0;
+  private int arrayY; //y's depend on map chosen
+  private int xa;
+  private int ya;
+  private int count = 50;
+  private int speed; //dependant on subclass
+  private int[][] path; 
+  private int diff; //difficulty, either e, m or h
+  private char type; //type of balloon to indicate img, given by subclass
+  
+  public Enemy (int [][] path, char diff, char type, int speed) {
+    this.path = path;
+    this.diff = diff; 
+    this.type = type;
     this.speed = speed;
-    this.x= x;
-    this.y= y;
-    this.xa = xa;
-    this.ya= ya;
-  }
-  public Enemy (BloonGame bg){
-   this.bg=bg; 
+    
+    if (diff == 'e'){
+      y = 350;
+      arrayY = 7;
+    } else if (diff == 'm') { //y's not yet determined
+      y = 350;
+      arrayY = 7;
+    } else { //y's not yet determined
+      y = 350; 
+      arrayY = 7;
+    }
+    
+    //paints balloon based on type
+    if (type == 'r'){ 
+      try {
+        img = ImageIO.read(new File("rookieballoon.png"));
+      } catch (IOException e) {
+        System.out.println(e);
+      }
+    } else if (type == 'i'){
+       try {
+        img = ImageIO.read(new File("iceballoon.png"));
+      } catch (IOException e) {
+        System.out.println(e);
+      }
+    } else if (type == 'a'){
+       try {
+        img = ImageIO.read(new File("athleticballoon.png"));
+      } catch (IOException e) {
+        System.out.println(e);
+      }
+    } else {
+       try {
+        img = ImageIO.read(new File("commanderballoon.png"));
+      } catch (IOException e) {
+        System.out.println(e);
+      }
+    }
+    
   }
   
-  public Enemy() 
-  {
-try {
- img = ImageIO.read(new File("balloon_red.png"));
-
-} 
-catch (IOException e) 
-{
-  System.out.println(e);
-} 
+  public void move () {
+    
+    if(count == 50)
+    {
+      count = 0;
+      if (path[arrayY][arrayX] == 1) //left
+      {
+        xa = -speed;
+        ya = 0;
+        arrayX -= 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
+      } else if (path[arrayY][arrayX] == 2){ //right
+        xa = speed;
+        ya = 0;
+        arrayX += 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
+      } else if (path[arrayY][arrayX] == 3){ //up
+        ya = -speed;
+        xa = 0;
+        arrayY -= 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
+      } else if (path[arrayY][arrayX] == 4){ //down
+        ya = speed;
+        xa = 0;
+        arrayY += 1;
+        System.out.println(arrayY);
+        System.out.println(arrayX);
+      } else {
+      }
+    }
+      x = x + xa; 
+      y = y + ya;
+      count += speed;
+    
   }
-  public abstract void move() {
-
-}
-  public abstract void paint (Graphics g) {
- 
+  
+  public void paint (Graphics2D g){
+    g.drawImage(img, x, y, observer);
   }
+  
 }
