@@ -6,27 +6,23 @@ import java.io.*;
 
 public class RookieBalloon extends Enemy 
 { 
-  public RookieBalloon(BloonGame bg) 
+  private int [][]path;
+  private int diff;
+  
+  public RookieBalloon(int [][] path, char diff) 
   { 
-   this.bg = bg;
+    super(path, diff, 'r', 1);
   }
 
-public  void move()
+  public void move()
   {
-    if (x + xa < 0)
-      xa = 1;
-    if (x + xa > 800 - 50)
-      xa = -1;
-    if (y + ya < 0)
-      ya = 1;
-    if (y + ya > 175 - 50)
-      ya = -1;
-    x = x + xa;
-    y = y + ya;
-}
-  public  void paint (Graphics g)
+    super.move();
+  }
+
+  public void paint (Graphics g)
   {
-  g.drawImage(img, x, 400, null);
+    Graphics2D g2d = (Graphics2D) g;
+    super.paint(g2d);
   }
 
 } 
