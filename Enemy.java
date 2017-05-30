@@ -29,12 +29,12 @@ public abstract class Enemy {
     if (diff == 'e'){
       y = 350;
       arrayY = 7;
-    } else if (diff == 'm') { //y's not yet determined
-      y = 350;
-      arrayY = 7;
-    } else { //y's not yet determined
-      y = 350; 
-      arrayY = 7;
+    } else if (diff == 'm') {
+      y = 450;
+      arrayY = 9;
+    } else if (diff == 'h'){
+      y = 100; 
+      arrayY = 2;
     }
     
     //paints balloon based on type
