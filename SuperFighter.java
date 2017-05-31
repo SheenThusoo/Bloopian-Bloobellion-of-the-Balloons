@@ -13,7 +13,7 @@ public abstract class SuperFighter extends Tower
   }
    public void paint(Graphics g)
   {
-    
+    g.drawImage(superFighter, 550, 625, null);
   }
   
 }
