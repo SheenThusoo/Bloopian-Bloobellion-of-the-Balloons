@@ -13,6 +13,6 @@ public abstract class MoneyCreator extends Tower
   }
    public void paint(Graphics g)
   {
-    
+     g.drawImage(moneyCreator, 350, 625, null);
   }
 }
