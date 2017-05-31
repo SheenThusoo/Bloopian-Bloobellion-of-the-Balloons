@@ -13,7 +13,7 @@ public abstract class SimpleTower extends Tower
   }
    public void paint(Graphics g)
   {
-    
+    g.drawImage(simpleTower, 50,625, null);
   }
 }
   
