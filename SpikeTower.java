@@ -13,6 +13,6 @@ public abstract class SpikeTower extends Tower
   }
    public void paint(Graphics g)
   {
-    
+    g.drawImage(spikeTower, 450, 625, null);
   }
 }
