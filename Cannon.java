@@ -13,6 +13,6 @@ public abstract class Cannon extends Tower
   }
    public void paint(Graphics g)
   {
-    
+    g.drawImage(cannon, 150, 625, null);
   }
 }
