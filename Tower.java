@@ -14,7 +14,12 @@ public abstract class Tower
   public  int level;
   public  int price;
   public  int reducedPrice;
-  public BufferedImage img = null; 
+  public BufferedImage moneyCreator; 
+  public BufferedImage cannon;
+  public BufferedImage missileLauncher; 
+  public BufferedImage simpleTower; 
+  public BufferedImage spikeTower;
+  public BufferedImage superFighter;
   public BloonGame bg;
   
    public Tower(BloonGame bg, int range, int x, int y, int level, int price, int reducedPrice)
@@ -36,7 +41,50 @@ public abstract class Tower
   public Tower() 
   {
 try {
- img = ImageIO.read(new File("balloonred.png"));
+ moneyCreator = ImageIO.read(new File("MoneyCreator.png"));
+
+} 
+catch (IOException e) 
+{
+  System.out.println(e);
+} 
+
+try {
+ cannon = ImageIO.read(new File("Cannon.png"));
+
+} 
+catch (IOException e) 
+{
+  System.out.println(e);
+} 
+
+try {
+ missileLauncher = ImageIO.read(new File("MissileLauncher.png"));
+
+} 
+catch (IOException e) 
+{
+  System.out.println(e);
+} 
+try {
+ simpleTower = ImageIO.read(new File("SimpleTower.png"));
+
+} 
+catch (IOException e) 
+{
+  System.out.println(e);
+} 
+
+try {
+ spikeTower = ImageIO.read(new File("SpikeTower.png"));
+
+} 
+catch (IOException e) 
+{
+  System.out.println(e);
+} 
+try {
+ superFighter = ImageIO.read(new File("SuperFighter.png"));
 
 } 
 catch (IOException e) 
@@ -44,6 +92,6 @@ catch (IOException e)
   System.out.println(e);
 } 
   }
-  public abstract void move ();
+  //public abstract void move ();
   public abstract void paint(Graphics g);
 }
