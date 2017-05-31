@@ -13,6 +13,6 @@ public abstract class MissileLauncher extends Tower
   }
    public void paint(Graphics g)
   {
-    
+    g.drawImage(missileLauncher, 250, 625, null);
   }
 }
