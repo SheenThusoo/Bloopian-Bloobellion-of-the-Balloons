@@ -55,6 +55,56 @@ public class BloonGame extends JPanel
   
   RookieBalloon ene = new RookieBalloon(easy, 'e');
   
+  public BloonGame(){
+    ArrayList balloons = new ArrayList();
+    int numofCLoons = 0;
+    int numofRLoons = 10;
+    int numofILoons = 0;
+    int numofALoons = 0;
+    int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
+    
+    for (int i = 0; i < numofRLoons; i++){
+      balloons.add(new RookieBalloon(int [][] path, char diff)); 
+    }
+  }
+  
+  public void nextRound(){ //should ONLY run when the round progresses:
+    int numofCLoons = 0;
+    int numofRLoons = 10;
+    int numofILoons = 0;
+    int numofALoons = 0;
+    numofRLoons += 5;
+    numofILoons += 5;
+    int round;
+    
+    if (round > 3) {
+      numofALoons += 5;
+    }
+    
+    if (round > 5) {
+      numofCLoons += 5;
+    }
+    
+    balloons.clear();
+    
+    for (int i = 0; i < numofRLoons; i++){
+      balloons.add(new RookieBalloon()); 
+    }
+    
+    for (int i = 0; i < numofILoons; i++){
+      balloons.add(new IceBalloon()); 
+    }
+    
+    for (int i = 0; i < numofAthLoons; i++){
+      balloons.add(new AthleticBalloon()); 
+    }
+    
+    for (int i = 0; i < numofCLoons; i++){
+      balloons.add(new CommanderBalloon(null)); 
+    }
+    
+    Collections.shuffle(balloons);
+  }
   /*
   public CityScape() {
     addKeyListener(new KeyListener() {
