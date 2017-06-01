@@ -54,25 +54,25 @@ public class BloonGame extends JPanel
   Map myMap = new Map(easy);
   
   RookieBalloon ene = new RookieBalloon(easy, 'e');
-  
-  public BloonGame(){
-    ArrayList balloons = new ArrayList();
+  ArrayList balloons = new ArrayList();
     int numofCLoons = 0;
     int numofRLoons = 10;
     int numofILoons = 0;
     int numofALoons = 0;
     int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
-    
+    public BloonGame(int numofCLoons, int numofRLoons, int numofILoons, int numofALoons, int numofLoons){
+   this.numofCLoons = numofCLoons; 
+   this.numofRLoons = numofRLoons;
+   this.numofILoons = numofILoons;
+   this.numofALoons = numofALoons;
+   this.numOfLoons = numOfLoons;
+   
     for (int i = 0; i < numofRLoons; i++){
       balloons.add(new RookieBalloon(int [][] path, char diff)); 
     }
   }
   
   public void nextRound(){ //should ONLY run when the round progresses:
-    int numofCLoons = 0;
-    int numofRLoons = 10;
-    int numofILoons = 0;
-    int numofALoons = 0;
     numofRLoons += 5;
     numofILoons += 5;
     int round;
@@ -105,6 +105,8 @@ public class BloonGame extends JPanel
     
     Collections.shuffle(balloons);
   }
+  
+ 
   /*
   public CityScape() {
     addKeyListener(new KeyListener() {
