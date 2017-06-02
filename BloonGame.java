@@ -6,6 +6,10 @@ import java.io.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections.shuffle;
+
 
 public class BloonGame extends JPanel 
 {
@@ -51,84 +55,106 @@ public class BloonGame extends JPanel
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
   
-  Map myMap = new Map(easy);
+  Display myDisplay = new Display();
+  Map myMap;
   
-  RookieBalloon ene = new RookieBalloon(easy, 'e');
-  ArrayList balloons = new ArrayList();
-    int numofCLoons = 0;
-    int numofRLoons = 10;
-    int numofILoons = 0;
-    int numofALoons = 0;
-    int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
-    public BloonGame(int numofCLoons, int numofRLoons, int numofILoons, int numofALoons, int numofLoons){
-   this.numofCLoons = numofCLoons; 
-   this.numofRLoons = numofRLoons;
-   this.numofILoons = numofILoons;
-   this.numofALoons = numofALoons;
-   this.numOfLoons = numOfLoons;
-   
-    for (int i = 0; i < numofRLoons; i++){
-      balloons.add(new RookieBalloon(int [][] path, char diff)); 
-    }
-  }
+  private int[][] path;
+  private char diff;
   
-  public void nextRound(){ //should ONLY run when the round progresses:
-    numofRLoons += 5;
-    numofILoons += 5;
-    int round;
-    
-    if (round > 3) {
-      numofALoons += 5;
-    }
-    
-    if (round > 5) {
-      numofCLoons += 5;
-    }
-    
-    balloons.clear();
-    
-    for (int i = 0; i < numofRLoons; i++){
-      balloons.add(new RookieBalloon()); 
-    }
-    
-    for (int i = 0; i < numofILoons; i++){
-      balloons.add(new IceBalloon()); 
-    }
-    
-    for (int i = 0; i < numofAthLoons; i++){
-      balloons.add(new AthleticBalloon()); 
-    }
-    
-    for (int i = 0; i < numofCLoons; i++){
-      balloons.add(new CommanderBalloon(null)); 
-    }
-    
-    Collections.shuffle(balloons);
-  }
+   ArrayList balloons = new ArrayList();
+   static int cLoonNum = 0;
+   static int rLoonNum = 10;
+   static int iLoonNum = 0;
+   static int aLoonNum = 0;
+   static int loonNum = rLoonNum + iLoonNum + aLoonNum + cLoonNum;
   
- 
-  /*
-  public CityScape() {
+  public BloonGame(int cLoonNum, int rLoonNum, int iLoonNum, int aLoonNum, int loonNum) {
+    
+    this.cLoonNum = cLoonNum; 
+    this.rLoonNum = rLoonNum;
+    this.iLoonNum = iLoonNum;
+    this.aLoonNum = aLoonNum;
+    this.loonNum = loonNum;
+    
+    if (myDisplay.getGameOn())
+    {
+      for (int i = 0; i < rLoonNum; i++){
+        balloons.add(new RookieBalloon(path, diff)); 
+      }
+    }
+    
     addKeyListener(new KeyListener() {
       @Override
       public void keyTyped(KeyEvent e) {
       }
       @Override
       public void keyReleased(KeyEvent e) {
-        ufo.keyReleased(e);
+       //receives map selection from user, gameOn checked so once a map is chosen it can't be changed
+        if (e.getKeyCode() == KeyEvent.VK_E && !myDisplay.getGameOn()){
+          myMap = new Map (easy);
+          path = easy;
+          diff = 'e';
+        }
+        if (e.getKeyCode() == KeyEvent.VK_M && !myDisplay.getGameOn()){
+          myMap = new Map (medium);
+          path = medium;
+          diff = 'm';
+        }
+        if (e.getKeyCode() == KeyEvent.VK_H && !myDisplay.getGameOn()){
+          myMap = new Map (hard);
+          path = hard;
+          diff = 'h';
+        }
+        myDisplay.keyReleased(e);
       }
       @Override
       public void keyPressed(KeyEvent e) {
-        ufo.keyPressed(e);
       }
     });
     setFocusable(true);
   } 
-  */
+  
+   public void nextRound(){ //should ONLY run when the round progresses:
+      int cLoonNum = 0;
+      int rLoonNum = 10;
+      int iloonNum = 0;
+      int aLoonNum = 0;
+      rLoonNum += 5;
+      iLoonNum += 5;
+      int round;
+     
+     if (round > 3) {
+       aLoonNum += 5;
+     }
+     
+     if (round > 5) {
+       cLoonNum += 5;
+     }
+     
+     balloons.clear();
+     
+     for (int i = 0; i < rLoonNum; i++){
+       balloons.add(new RookieBalloon(path, diff)); 
+     }
+     
+     for (int i = 0; i < iloonNum; i++){
+       balloons.add(new IceBalloon(path, diff)); 
+     }
+     
+     for (int i = 0; i < aLoonNum; i++){
+       balloons.add(new AthleticBalloon(path, diff)); 
+     }
+     
+     for (int i = 0; i < cLoonNum; i++){
+       balloons.add(new CommanderBalloon(path,diff)); 
+     }
+      
+      Collections.shuffle(balloons);
+    }
   
   public void move() 
   {
-    ene.move();
+    
   }
   
   @Override
@@ -139,26 +165,31 @@ public class BloonGame extends JPanel
                          RenderingHints.VALUE_ANTIALIAS_ON);
     
     //Background
-    Color customColor = new Color(0, 0, 51);
-    g2d.setColor(customColor);
+    g2d.setColor(Color.white);
     g2d.fillRect(0, 0, 1100, 750);
-
-    myMap.paint(g2d);
-    ene.paint(g2d);
+    //perhaps do the menu bar in brown down here?
     
+    if (!myDisplay.getGameOn())
+       myDisplay.paint(g2d);
+    else
+    {
+      myMap.paint(g2d);
+      //game menu., enemies, and towers and painted here
+    }
   }
+  
   
   public static void main(String[] args) throws InterruptedException 
   {
     JFrame frame = new JFrame("BloonGame");
     //Add our JPanel to the frame
-    frame.add(new BloonGame());
+    BloonGame p = new BloonGame(cLoonNum, rLoonNum, iLoonNum, aLoonNum, loonNum);
+    frame.add(p);
     frame.setSize(1100, 750);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
-    BloonGame p = new BloonGame();
-    frame.add(p);
+    
     
     while (true)
     {
