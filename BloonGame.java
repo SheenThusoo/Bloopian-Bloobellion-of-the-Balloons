@@ -24,7 +24,54 @@ public class BloonGame extends JPanel
     {0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0},
     {0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+    RookieBalloon ene = new RookieBalloon(easy, 'e'); 
+   /* ArrayList balloons = new ArrayList();
+    int numofCLoons = 0;
+    int numofRLoons = 10;
+    int numofILoons = 0;
+    int numofALoons = 0;
+    int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
+  public BloonGame(){
+   
+    for (int i = 0; i < numofRLoons; i++){
+      balloons.add(new RookieBalloon(easy, 'e')); 
+    }
+  }
   
+  public void nextRound(){ //should ONLY run when the round progresses:
+    numofRLoons += 5;
+    numofILoons += 5;
+    int round = 0;
+    
+    if (round > 3) {
+      numofALoons += 5;
+    }
+    
+    if (round > 5) {
+      numofCLoons += 5;
+    }
+    
+    balloons.clear();
+    
+    for (int i = 0; i < numofRLoons; i++){
+      balloons.add(new RookieBalloon(easy, 'e'));
+    
+    for (int n = 0; n < numofILoons; n++){
+      balloons.add(new IceBalloon(easy, 'e')); 
+    }
+    
+    for (int s = 0; s < numofALoons; s++){
+      balloons.add(new AthleticBalloon(easy, 'e')); 
+    }
+    
+    for (int t = 0; t < numofCLoons; t++){
+      balloons.add(new CommanderBalloon(easy, 'e')); 
+    }
+    
+    Collections.shuffle(balloons);
+    }
+  }
+  */  
   private int[][] medium = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,0,2,2,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
@@ -55,6 +102,7 @@ public class BloonGame extends JPanel
   Display myDisplay = new Display();
   Map myMap;
   RookieBalloon ene;
+  
   
   public BloonGame() {
     
