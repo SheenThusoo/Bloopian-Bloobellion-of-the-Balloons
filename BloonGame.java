@@ -6,9 +6,6 @@ import java.io.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.*;
-import java.util.ArrayList;
-import java.util.Collections.shuffle;
 
 
 public class BloonGame extends JPanel 
@@ -57,31 +54,9 @@ public class BloonGame extends JPanel
   
   Display myDisplay = new Display();
   Map myMap;
+  RookieBalloon ene;
   
-  private int[][] path;
-  private char diff;
-  
-   ArrayList balloons = new ArrayList();
-   static int cLoonNum = 0;
-   static int rLoonNum = 10;
-   static int iLoonNum = 0;
-   static int aLoonNum = 0;
-   static int loonNum = rLoonNum + iLoonNum + aLoonNum + cLoonNum;
-  
-  public BloonGame(int cLoonNum, int rLoonNum, int iLoonNum, int aLoonNum, int loonNum) {
-    
-    this.cLoonNum = cLoonNum; 
-    this.rLoonNum = rLoonNum;
-    this.iLoonNum = iLoonNum;
-    this.aLoonNum = aLoonNum;
-    this.loonNum = loonNum;
-    
-    if (myDisplay.getGameOn())
-    {
-      for (int i = 0; i < rLoonNum; i++){
-        balloons.add(new RookieBalloon(path, diff)); 
-      }
-    }
+  public BloonGame() {
     
     addKeyListener(new KeyListener() {
       @Override
@@ -92,19 +67,17 @@ public class BloonGame extends JPanel
        //receives map selection from user, gameOn checked so once a map is chosen it can't be changed
         if (e.getKeyCode() == KeyEvent.VK_E && !myDisplay.getGameOn()){
           myMap = new Map (easy);
-          path = easy;
-          diff = 'e';
-        }
+          ene = new RookieBalloon(easy, 'e');
+      }
         if (e.getKeyCode() == KeyEvent.VK_M && !myDisplay.getGameOn()){
           myMap = new Map (medium);
-          path = medium;
-          diff = 'm';
-        }
+          ene = new RookieBalloon(medium, 'm');
+      }
         if (e.getKeyCode() == KeyEvent.VK_H && !myDisplay.getGameOn()){
           myMap = new Map (hard);
-          path = hard;
-          diff = 'h';
-        }
+        ene = new RookieBalloon(hard, 'h');
+      }
+        
         myDisplay.keyReleased(e);
       }
       @Override
@@ -114,47 +87,11 @@ public class BloonGame extends JPanel
     setFocusable(true);
   } 
   
-   public void nextRound(){ //should ONLY run when the round progresses:
-      int cLoonNum = 0;
-      int rLoonNum = 10;
-      int iloonNum = 0;
-      int aLoonNum = 0;
-      rLoonNum += 5;
-      iLoonNum += 5;
-      int round;
-     
-     if (round > 3) {
-       aLoonNum += 5;
-     }
-     
-     if (round > 5) {
-       cLoonNum += 5;
-     }
-     
-     balloons.clear();
-     
-     for (int i = 0; i < rLoonNum; i++){
-       balloons.add(new RookieBalloon(path, diff)); 
-     }
-     
-     for (int i = 0; i < iloonNum; i++){
-       balloons.add(new IceBalloon(path, diff)); 
-     }
-     
-     for (int i = 0; i < aLoonNum; i++){
-       balloons.add(new AthleticBalloon(path, diff)); 
-     }
-     
-     for (int i = 0; i < cLoonNum; i++){
-       balloons.add(new CommanderBalloon(path,diff)); 
-     }
-      
-      Collections.shuffle(balloons);
-    }
-  
   public void move() 
   {
-    
+    if (myDisplay.getGameOn()){
+      ene.move();
+    }
   }
   
   @Override
@@ -174,6 +111,7 @@ public class BloonGame extends JPanel
     else
     {
       myMap.paint(g2d);
+      ene.paint(g2d);
       //game menu., enemies, and towers and painted here
     }
   }
@@ -183,7 +121,7 @@ public class BloonGame extends JPanel
   {
     JFrame frame = new JFrame("BloonGame");
     //Add our JPanel to the frame
-    BloonGame p = new BloonGame(cLoonNum, rLoonNum, iLoonNum, aLoonNum, loonNum);
+    BloonGame p = new BloonGame();
     frame.add(p);
     frame.setSize(1100, 750);
     frame.setVisible(true);
