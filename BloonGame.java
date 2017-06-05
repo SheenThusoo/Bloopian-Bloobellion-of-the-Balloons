@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -128,6 +130,10 @@ public class BloonGame extends JPanel
   char diff;
   boolean diffChosen; 
   
+    int x;
+  int y;
+  Tower towerChosen;
+  
   public BloonGame(){
     
     addKeyListener(new KeyListener() {
@@ -168,6 +174,31 @@ public class BloonGame extends JPanel
       public void keyPressed(KeyEvent e) {
       }
     });
+    setFocusable(true);
+    
+     addMouseListener(new MouseListener() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
+        System.out.println(x + ","+ y);
+        
+        if((x >= 150 && x <= 200) && (y >= 625 && y <= 675))
+        {
+          towerChosen = cannon;
+          System.out.println("true");
+        }
+      }
+      public void mousePressed(MouseEvent e){
+      }
+      public void mouseReleased(MouseEvent e){
+      }
+      public void mouseEntered(MouseEvent e){
+      }
+      public void mouseExited(MouseEvent e){
+      }
+    });
+    
     setFocusable(true);
     
   }
