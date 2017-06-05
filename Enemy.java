@@ -42,7 +42,7 @@ public abstract class Enemy {
       try {
         img = ImageIO.read(new File("rookieballoon.png"));
       } catch (IOException e) {
-        System.out.println(e);
+        
       }
     } else if (type == 'i'){
        try {
@@ -76,26 +76,18 @@ public abstract class Enemy {
         xa = -speed;
         ya = 0;
         arrayX -= 1;
-        System.out.println(arrayY);
-        System.out.println(arrayX);
       } else if (path[arrayY][arrayX] == 2){ //right
         xa = speed;
         ya = 0;
         arrayX += 1;
-        System.out.println(arrayY);
-        System.out.println(arrayX);
       } else if (path[arrayY][arrayX] == 3){ //up
         ya = -speed;
         xa = 0;
         arrayY -= 1;
-        System.out.println(arrayY);
-        System.out.println(arrayX);
       } else if (path[arrayY][arrayX] == 4){ //down
         ya = speed;
         xa = 0;
         arrayY += 1;
-        System.out.println(arrayY);
-        System.out.println(arrayX);
       } else {
       }
     }
