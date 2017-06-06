@@ -1,66 +1,3 @@
-import java.awt.*;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.*;
-import java.io.*;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-
-public class BloonGame extends JPanel 
-{
-  //path/map arrays by difficulty
-  //1 = left , 2 = right , 3 = up , 4 = down
-  private int[][] easy = { 
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,0,0,0,0},
-    {0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0}, 
-    {0,0,3,0,0,4,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
-    {0,0,3,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,3,0,0,4,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0},
-    {0,0,3,0,0,4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {2,2,3,0,0,4,0,3,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
-     {0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0},
-    {0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-  
-  private int[][] medium = {
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,2,2,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,3,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,3,0,0,0,4,0,0,0,0,2,2,2,4,0,0,0,0,0,0,0,0}, 
-    {0,0,3,0,0,0,4,0,0,0,0,3,0,0,4,0,0,0,0,0,0,0,0}, 
-    {0,0,3,0,0,0,4,0,0,0,0,3,0,0,4,0,0,0,0,0,0,0,0}, 
-    {0,0,3,0,0,0,2,2,4,0,0,3,0,0,2,2,2,2,2,2,2,2,0}, 
-    {0,0,3,0,0,0,0,0,4,0,0,3,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,3,0,0,0,0,0,4,0,0,3,0,0,0,0,0,0,0,0,0,0,0}, 
-    {2,2,3,0,0,0,0,0,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-  
-  private int[][] hard = {
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {2,2,2,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,0,0,4,0,0,0,0,0,2,2,2,2,4,0,0,0,0,0,0,0,0},
-    {0,0,0,0,4,0,0,0,0,0,3,0,0,0,2,2,2,2,2,2,2,2,0}, 
-    {0,0,0,0,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-  
-  Display myDisplay = new Display();
-  Map myMap;
-  RookieBalloon ene;
-  
-  /*ArrayList balloons = new ArrayList();
-    int numofCLoons = 0;
-    int numofRLoons = 10;import java.awt.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
@@ -120,6 +57,7 @@ public class BloonGame extends JPanel
   Map myMap;
   
   ArrayList <Enemy> balloons = new ArrayList <Enemy>();
+  ArrayList <Enemy> balloonsFinal = new ArrayList  <Enemy>();
   int numofCLoons = 0;
   int numofRLoons = 10;
   int numofILoons = 0;
@@ -130,7 +68,7 @@ public class BloonGame extends JPanel
   char diff;
   boolean diffChosen; 
   
-    int x;
+  int x;
   int y;
   Tower towerChosen;
   
@@ -240,8 +178,8 @@ public class BloonGame extends JPanel
   public void move() 
   {
     if (myDisplay.getGameOn()){
-      for (int i = 0; i < balloons.size(); i++)
-        balloons.get(i).move();
+      for (int i = 0; i < balloonsFinal.size(); i++)
+        balloonsFinal.get(i).move();
     }
   }
   
@@ -258,14 +196,22 @@ public class BloonGame extends JPanel
     //perhaps do the menu bar in brown down here?
     
     if (!myDisplay.getGameOn())
-       myDisplay.paint(g2d);
-    else
-    {
-      myMap.paint(g2d);
-      for (int i = 0; i < balloons.size(); i++)
-        balloons.get(i).paint(g2d);
-      //game menu., enemies, and towers and painted here
-    }
+         myDisplay.paint(g2d);
+      else
+      {
+        if (time % 100 == 0 && balloons.size() > 0)
+        {
+          balloonsFinal.add(balloons.get(0));
+          balloons.remove(0);
+        }
+
+        myMap.paint(g2d);
+        for (int i = 0; i < balloonsFinal.size(); i++){
+          balloonsFinal.get(i).paint(g2d);
+        }
+        time++;
+       // game menu, enemies, and towers and painted here
+      }
   }
   
   
