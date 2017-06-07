@@ -6,8 +6,6 @@ import java.io.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +13,7 @@ import java.util.List;
 public class BloonGame extends JPanel 
 {
   //path/map arrays by difficulty
-  //1 = left , 2 = right , 3 = up , 4 = down, 5 = simpleTower, 6 = cannon, 
-  //7 = missile launcher, 8 = money creator, 9 = spike tower, 10 = super tower
+  //1 = left , 2 = right , 3 = up , 4 = down
   private int[][] easy = { 
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
     {0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,0,0,0,0},
@@ -59,22 +56,6 @@ public class BloonGame extends JPanel
   
   Display myDisplay = new Display();
   Map myMap;
-  private MoneyCreator  moneyCreator = new MoneyCreator(this);
-  private Cannon cannon = new Cannon(this);
-  private MissileLauncher missileLauncher = new MissileLauncher(this);
-  private SpikeTower spikeTower = new SpikeTower(this);
-  private SuperFighter superFighter = new SuperFighter(this);
-  private SimpleTower simpleTower = new SimpleTower(this);
-  private int[][] path;
-  private char diff;
-  
-  private int x;
-  private int y;
-  private int arrayX;
-  private int arrayY;
-  private Tower towerChosen;
-  private boolean choseTower = false;
-  private boolean towerChoiceMade = false;
   
   ArrayList <Enemy> balloons = new ArrayList <Enemy>();
   ArrayList <Enemy> balloonsFinal = new ArrayList  <Enemy>();
@@ -85,11 +66,16 @@ public class BloonGame extends JPanel
   int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
   
   int[][] map;
+  char diff;
   boolean diffChosen; 
   
   int time = 0; //time for spacing balloons, should reset every round
+  ////////
+  int round = 0; //starts on round 0, before the player presses the continue button to start round one
+  boolean pause = true; //when pause is false balloons and towers are paused 
+  ////////
   
-  public BloonGame() {
+  public BloonGame(){
     
     addKeyListener(new KeyListener() {
       @Override
@@ -99,17 +85,37 @@ public class BloonGame extends JPanel
       public void keyReleased(KeyEvent e) {
         //receives map selection from user, gameOn checked so once a map is chosen it can't be changed
         if (e.getKeyCode() == KeyEvent.VK_E && !myDisplay.getGameOn()){
-          myMap = new Map (easy);
-          path = easy;
+          map = easy;
+          diff = 'e';
+          myMap = new Map (map);
+          for (int i = 0; i < numofRLoons; i++){
+            balloons.add(new RookieBalloon(map, diff));
+          }
         }
         if (e.getKeyCode() == KeyEvent.VK_M && !myDisplay.getGameOn()){
-          myMap = new Map (medium);
-          path = medium;
+          map = medium;
+          diff = 'm';
+          myMap = new Map (map);
+          for (int i = 0; i < numofRLoons; i++){
+            balloons.add(new RookieBalloon(map, diff));
+          }
         }
         if (e.getKeyCode() == KeyEvent.VK_H && !myDisplay.getGameOn()){
-          myMap = new Map (hard);
-          path = hard;
+          map = hard;
+          diff = 'h';
+          myMap = new Map (map);    
+          for (int i = 0; i < numofRLoons; i++){
+            balloons.add(new RookieBalloon(map, diff)); 
+          }
         }
+        //////////
+        if (e.getKeyCode() == KeyEvent.VK_ENTER && myDisplay.getGameOn()){
+          if (pause)
+            pause = false;
+          else 
+            pause = true;
+        }
+        ////////
         
         myDisplay.keyReleased(e);
       }
@@ -117,79 +123,6 @@ public class BloonGame extends JPanel
       public void keyPressed(KeyEvent e) {
       }
     });
-    setFocusable(true);
-    
-    
-    addMouseListener(new MouseListener() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        x = e.getX();
-        y = e.getY();
-        System.out.println(x + "," + y);
-        
-        if(!towerChoiceMade)
-        {
-          if((x >= 50 && x <= 100) && (y >= 625 && y <= 675))
-          {
-            towerChosen = simpleTower;
-            System.out.println("Simple Tower");
-            choseTower = true;
-          }
-          
-          if((x >= 150 && x <= 200) && (y >= 625 && y <= 675))
-          {
-            towerChosen = cannon;
-            System.out.println("Cannon");
-            choseTower = true;
-          }
-          if((x >= 250 && x <= 300) && (y >= 625 && y <= 675))
-          {
-            towerChosen = missileLauncher;
-            System.out.println("Missile Launcher");
-            choseTower = true;
-          }
-          if((x >= 350 && x <= 400) && (y >= 625 && y <= 675))
-          {
-            towerChosen = moneyCreator;
-            System.out.println("Money Creator");
-            choseTower = true;
-          }
-          if((x >= 450 && x <= 500) && (y >= 625 && y <= 675))
-          {
-            towerChosen = spikeTower;
-            System.out.println("Spike Tower");
-            choseTower = true;
-          }
-          if((x >= 550 && x <= 600) && (y >= 625 && y <= 675))
-          {
-            towerChosen = superFighter;
-            System.out.println("Super Fighter");
-            choseTower = true;
-          }
-          towerChoiceMade = true;
-        }
-        else 
-        {
-          
-          arrayX = x/50;
-          arrayY = y/50;
-          
-          System.out.println(arrayX + "," + arrayY);
-          
-          towerChosen.placeTower(path, arrayX, arrayY);
-          towerChoiceMade = false;
-        }
-      }
-      public void mousePressed(MouseEvent e){
-      }
-      public void mouseReleased(MouseEvent e){
-      }
-      public void mouseEntered(MouseEvent e){
-      }
-      public void mouseExited(MouseEvent e){
-      }
-    });
-    
     setFocusable(true);
     
   }
@@ -230,7 +163,7 @@ public class BloonGame extends JPanel
   
   public void move() 
   {
-    if (myDisplay.getGameOn()){
+    if (myDisplay.getGameOn() && !pause){ //'&& !pause added 
       for (int i = 0; i < balloonsFinal.size(); i++)
         balloonsFinal.get(i).move();
     }
@@ -244,15 +177,15 @@ public class BloonGame extends JPanel
                          RenderingHints.VALUE_ANTIALIAS_ON);
     
     //Background
-    g2d.setColor(Color.GRAY);
+    g2d.setColor(Color.white);
     g2d.fillRect(0, 0, 1100, 750);
     //perhaps do the menu bar in brown down here?
     
     if (!myDisplay.getGameOn())
        myDisplay.paint(g2d);
-    else
+    else 
     {
-      if (time % 100 == 0 && balloons.size() > 0)
+      if (time % 100 == 0 && balloons.size() > 0 && !pause)
       {
         balloonsFinal.add(balloons.get(0));
         balloons.remove(0);
@@ -262,48 +195,9 @@ public class BloonGame extends JPanel
       for (int i = 0; i < balloonsFinal.size(); i++){
         balloonsFinal.get(i).paint(g2d);
       }
-      time++;
+      if (!pause)
+        time++;
      // game menu, enemies, and towers and painted here
-     
-     moneyCreator.paint(g2d);
-      cannon.paint(g2d);
-      simpleTower.paint(g2d);
-      missileLauncher.paint(g2d);
-      spikeTower.paint(g2d);
-      superFighter.paint(g2d);
-      if(choseTower == true)
-      {
-        if (towerChosen == simpleTower)
-        {
-          g2d.setColor(Color.RED);
-          g2d.drawRect(45, 620 , 55, 55);
-        }
-        else if (towerChosen == cannon)
-        {
-          g2d.setColor(Color.RED);
-          g2d.drawRect(145, 620 , 55, 55);
-        }
-        else if (towerChosen == missileLauncher)
-        {
-          g2d.setColor(Color.RED);
-          g2d.drawRect(245, 620 , 55, 55);
-        }
-        else if (towerChosen == moneyCreator)
-        {
-          g2d.setColor(Color.RED);
-          g2d.drawRect(345, 620 , 55, 55);
-        }
-        else if (towerChosen == spikeTower)
-        {
-          g2d.setColor(Color.RED);
-          g2d.drawRect(445, 620 , 55, 55);
-        }
-        else if (towerChosen == superFighter)
-        {
-          g2d.setColor(Color.RED);
-          g2d.drawRect(545, 620 , 55, 55);
-        }
-      }
     }
   }
   
