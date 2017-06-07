@@ -85,7 +85,6 @@ public class BloonGame extends JPanel
   int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
   
   int[][] map;
-  char diff;
   boolean diffChosen; 
   
   int time = 0; //time for spacing balloons, should reset every round
@@ -101,17 +100,14 @@ public class BloonGame extends JPanel
         //receives map selection from user, gameOn checked so once a map is chosen it can't be changed
         if (e.getKeyCode() == KeyEvent.VK_E && !myDisplay.getGameOn()){
           myMap = new Map (easy);
-          ene = new RookieBalloon(easy, 'e');
           path = easy;
         }
         if (e.getKeyCode() == KeyEvent.VK_M && !myDisplay.getGameOn()){
           myMap = new Map (medium);
-          ene = new RookieBalloon(medium, 'm');
           path = medium;
         }
         if (e.getKeyCode() == KeyEvent.VK_H && !myDisplay.getGameOn()){
           myMap = new Map (hard);
-          ene = new RookieBalloon(hard, 'h');
           path = hard;
         }
         
