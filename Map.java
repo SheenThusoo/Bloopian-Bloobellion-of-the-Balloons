@@ -1,6 +1,9 @@
 import java.io.*;
 import java.awt.*;
 import javax.swing.*;
+import java.awt.image.BufferedImage ;
+import java.awt.Image;
+import javax.imageio.*;
 
 public class Map
 {
@@ -8,6 +11,7 @@ public class Map
   
   private Color path = new Color(229, 207, 139);
   private Color grass = new Color(94, 229, 73);
+  
   public BufferedImage moneyCreator; 
   public BufferedImage cannon;
   public BufferedImage missileLauncher; 
@@ -18,7 +22,8 @@ public class Map
   public Map (int[][] m) //receives map array from main
   {
     this.m = m;
-      try {
+    
+    try {
       moneyCreator = ImageIO.read(new File("MoneyCreator.png"));
       
     } 
@@ -69,10 +74,9 @@ public class Map
     {
       System.out.println(e);
     } 
-    
   }
   
-   public void paint(Graphics g)
+  public void paint(Graphics g)
   {
     //5 = simple tower, 6 = cannon, 7 = missile, 8 = money creator, 9 = spike tower, 10 = super tower
     for (int i = 0; i < 11; i++){
@@ -111,5 +115,8 @@ public class Map
         }
           else {}
       }
-
+    }
+    
+  }
+  
 }
