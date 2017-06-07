@@ -5,7 +5,7 @@ import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 
-public abstract class SuperFighter extends Tower
+public  class SuperFighter extends Tower
 {
   public SuperFighter(BloonGame bg)
   {
@@ -13,7 +13,10 @@ public abstract class SuperFighter extends Tower
   }
    public void paint(Graphics g)
   {
-    g.drawImage(superFighter, 550, 625, null);
+    g.drawImage(superFighter, x+500, y, null);
   }
-  
+  public void placeTower(int[][] path, int arrayX, int arrayY)
+   {
+     path[arrayY][arrayX] = 10;
+   }
 }
