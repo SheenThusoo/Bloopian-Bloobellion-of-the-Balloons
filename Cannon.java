@@ -5,7 +5,7 @@ import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 
-public abstract class Cannon extends Tower
+public  class Cannon extends Tower
 {
   public Cannon(BloonGame bg)
   {
@@ -13,6 +13,10 @@ public abstract class Cannon extends Tower
   }
    public void paint(Graphics g)
   {
-    g.drawImage(cannon, 150, 625, null);
+    g.drawImage(cannon, x +100, y-5, null);
   }
+   public void placeTower(int[][] path, int arrayX, int arrayY)
+   {
+     path[arrayY][arrayX] = 6;
+   }
 }
