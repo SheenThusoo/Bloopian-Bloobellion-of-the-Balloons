@@ -5,14 +5,18 @@ import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 
-public abstract class MoneyCreator extends Tower
+public  class MoneyCreator extends Tower
 {
   public MoneyCreator(BloonGame bg)
   {
     this.bg = bg;
   }
-   public void paint(Graphics g)
+  public void paint(Graphics g)
   {
-     g.drawImage(moneyCreator, 350, 625, null);
+    g.drawImage(moneyCreator, x+300, y, null);
+  }
+  public void placeTower(int[][] path, int arrayX, int arrayY)
+  {
+    path[arrayY][arrayX] = 8;
   }
 }
