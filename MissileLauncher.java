@@ -5,7 +5,7 @@ import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 
-public abstract class MissileLauncher extends Tower
+public  class MissileLauncher extends Tower
 {
   public MissileLauncher(BloonGame bg) 
   {
@@ -13,6 +13,10 @@ public abstract class MissileLauncher extends Tower
   }
    public void paint(Graphics g)
   {
-    g.drawImage(missileLauncher, 250, 625, null);
+    g.drawImage(missileLauncher, x+200, y, null);
   }
+   public void placeTower(int[][] path, int arrayX, int arrayY)
+   {
+     path[arrayY][arrayX] = 7;
+   }
 }
