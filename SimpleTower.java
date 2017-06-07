@@ -5,7 +5,7 @@ import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 
-public abstract class SimpleTower extends Tower
+public  class SimpleTower extends Tower
 {
   public SimpleTower(BloonGame bg)
   {
@@ -13,7 +13,11 @@ public abstract class SimpleTower extends Tower
   }
    public void paint(Graphics g)
   {
-    g.drawImage(simpleTower, 50,625, null);
+    g.drawImage(simpleTower, x,y, null);
   }
+   public void placeTower(int[][] path, int arrayX, int arrayY)
+   {
+     path[arrayY][arrayX] = 5;
+   }
 }
   
