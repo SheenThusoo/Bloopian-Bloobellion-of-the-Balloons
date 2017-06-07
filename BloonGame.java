@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
-
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -67,10 +68,21 @@ public class BloonGame extends JPanel
   int[][] map;
   char diff;
   boolean diffChosen; 
-  
-  int x;
-  int y;
-  Tower towerChosen;
+  private MoneyCreator  moneyCreator = new MoneyCreator(this);
+  private Cannon cannon = new Cannon(this);
+  private MissileLauncher missileLauncher = new MissileLauncher(this);
+  private SpikeTower spikeTower = new SpikeTower(this);
+  private SuperFighter superFighter = new SuperFighter(this);
+  private SimpleTower simpleTower = new SimpleTower(this);
+  private int[][] path;
+  private char diff;
+  private int x;
+  private int y;
+  private int arrayX;
+  private int arrayY;
+  private Tower towerChosen;
+  private boolean choseTower = false;
+  private boolean towerChoiceMade = false;
   
   public BloonGame(){
     
@@ -114,17 +126,64 @@ public class BloonGame extends JPanel
     });
     setFocusable(true);
     
-     addMouseListener(new MouseListener() {
+      addMouseListener(new MouseListener() {
       @Override
       public void mouseClicked(MouseEvent e) {
         x = e.getX();
         y = e.getY();
-        System.out.println(x + ","+ y);
+        System.out.println(x + "," + y);
         
-        if((x >= 150 && x <= 200) && (y >= 625 && y <= 675))
+        if(!towerChoiceMade)
         {
-          towerChosen = cannon;
-          System.out.println("true");
+          if((x >= 50 && x <= 100) && (y >= 625 && y <= 675))
+          {
+            towerChosen = simpleTower;
+            System.out.println("Simple Tower");
+            choseTower = true;
+          }
+          
+          if((x >= 150 && x <= 200) && (y >= 625 && y <= 675))
+          {
+            towerChosen = cannon;
+            System.out.println("Cannon");
+            choseTower = true;
+          }
+          if((x >= 250 && x <= 300) && (y >= 625 && y <= 675))
+          {
+            towerChosen = missileLauncher;
+            System.out.println("Missile Launcher");
+            choseTower = true;
+          }
+          if((x >= 350 && x <= 400) && (y >= 625 && y <= 675))
+          {
+            towerChosen = moneyCreator;
+            System.out.println("Money Creator");
+            choseTower = true;
+          }
+          if((x >= 450 && x <= 500) && (y >= 625 && y <= 675))
+          {
+            towerChosen = spikeTower;
+            System.out.println("Spike Tower");
+            choseTower = true;
+          }
+          if((x >= 550 && x <= 600) && (y >= 625 && y <= 675))
+          {
+            towerChosen = superFighter;
+            System.out.println("Super Fighter");
+            choseTower = true;
+          }
+          towerChoiceMade = true;
+        }
+        else 
+        {
+          
+          arrayX = x/50;
+          arrayY = y/50;
+          
+          System.out.println(arrayX + "," + arrayY);
+          
+          towerChosen.placeTower(path, arrayX, arrayY);
+          towerChoiceMade = false;
         }
       }
       public void mousePressed(MouseEvent e){
@@ -211,7 +270,46 @@ public class BloonGame extends JPanel
         }
         time++;
        // game menu, enemies, and towers and painted here
+      moneyCreator.paint(g2d);
+      cannon.paint(g2d);
+      simpleTower.paint(g2d);
+      missileLauncher.paint(g2d);
+      spikeTower.paint(g2d);
+      superFighter.paint(g2d);
+      if(choseTower == true)
+      {
+        if (towerChosen == simpleTower)
+        {
+          g2d.setColor(Color.RED);
+          g2d.drawRect(45, 620 , 55, 55);
+        }
+        else if (towerChosen == cannon)
+        {
+          g2d.setColor(Color.RED);
+          g2d.drawRect(145, 620 , 55, 55);
+        }
+        else if (towerChosen == missileLauncher)
+        {
+          g2d.setColor(Color.RED);
+          g2d.drawRect(245, 620 , 55, 55);
+        }
+        else if (towerChosen == moneyCreator)
+        {
+          g2d.setColor(Color.RED);
+          g2d.drawRect(345, 620 , 55, 55);
+        }
+        else if (towerChosen == spikeTower)
+        {
+          g2d.setColor(Color.RED);
+          g2d.drawRect(445, 620 , 55, 55);
+        }
+        else if (towerChosen == superFighter)
+        {
+          g2d.setColor(Color.RED);
+          g2d.drawRect(545, 620 , 55, 55);
+        }
       }
+     }
   }
   
   
