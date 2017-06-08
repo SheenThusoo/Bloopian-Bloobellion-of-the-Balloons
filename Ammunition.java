@@ -6,9 +6,10 @@ import java.io.*;
 
 public abstract class Ammunition
 {
+  public BloonGame bg;
   public BufferedImage img = null;
   
   public abstract int move();
-  public abstract int paint();
+  //public abstract int paint();
   public abstract int collision();
 }
