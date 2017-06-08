@@ -9,7 +9,7 @@ public abstract class Ammunition
   public BloonGame bg;
   public BufferedImage img = null;
   
-  public abstract int move();
+  public abstract void move();
   //public abstract int paint();
-  public abstract int collision();
+  public abstract void collision();
 }
