@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
 
-public abstract class Tack extends Ammunition
+public class Tack extends Ammunition
 {
    public Tack(BloonGame bg) 
   { 
