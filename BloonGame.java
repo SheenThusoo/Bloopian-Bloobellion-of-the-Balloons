@@ -341,8 +341,7 @@ public class BloonGame extends JPanel
     frame.setSize(1100, 750);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-    
+   
     while (true)
     {
       p.move();
