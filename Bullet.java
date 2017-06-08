@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.io.*;
 
-public abstract class Bullet extends Ammunition
+public class Bullet extends Ammunition
 {
   public Bullet(BloonGame bg) 
   { 
