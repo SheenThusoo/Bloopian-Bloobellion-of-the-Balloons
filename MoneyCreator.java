@@ -17,6 +17,7 @@ public  class MoneyCreator extends Tower
   }
   public void placeTower(int[][] path, int arrayX, int arrayY)
   {
-    path[arrayY][arrayX] = 8;
+    if (path[arrayY][arrayX] == 0)
+      path[arrayY][arrayX] = 8;
   }
 }
