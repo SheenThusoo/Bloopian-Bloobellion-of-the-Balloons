@@ -95,4 +95,5 @@ public abstract class Tower
   //public abstract void move ();
   public abstract void paint(Graphics g);
   public abstract void placeTower(int[][] path, int arrayX, int arrayY);
+  public abstract void shootCheck(int[][] path);
 }
