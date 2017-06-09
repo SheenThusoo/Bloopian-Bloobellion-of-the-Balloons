@@ -87,10 +87,9 @@ public class BloonGame extends JPanel
   boolean diffChosen; 
   
   int time = 0; //time for spacing balloons, should reset every round
-  ////////
-  int round = 0; //starts on round 0, before the player presses the continue button to start round one
+  int round = 0; 
+  boolean changeRound = false;
   boolean pause = true; //when pause is false balloons and towers are paused 
-  ////////
   
   public BloonGame(){
     
@@ -122,20 +121,18 @@ public class BloonGame extends JPanel
         if (e.getKeyCode() == KeyEvent.VK_H && !myDisplay.getGameOn()){
           map = hard;
           diff = 'h';
-          myMap = new Map (map);    
+          myMap = new Map (map);  
           for (int i = 0; i < numofRLoons; i++){
             balloons.add(new RookieBalloon(map, diff)); 
           }
           path = hard;
         }
-        //////////
         if (e.getKeyCode() == KeyEvent.VK_ENTER && myDisplay.getGameOn()){
           if (pause)
             pause = false;
           else 
             pause = true;
         }
-        ////////
         
         myDisplay.keyReleased(e);
       }
@@ -150,6 +147,7 @@ public class BloonGame extends JPanel
       public void mouseClicked(MouseEvent e) {
         x = e.getX();
         y = e.getY();
+        
         System.out.println(x + "," + y);
         
         if(!towerChoiceMade)
@@ -193,7 +191,8 @@ public class BloonGame extends JPanel
           }
           towerChoiceMade = true;
         }
-         if (x <1100 && y <550)  
+        if (x <1100 && y <550) 
+          //else 
         {
           
           arrayX = x/50;
@@ -215,13 +214,13 @@ public class BloonGame extends JPanel
       }
     });
     
-    setFocusable(true);
+    setFocusable(true);   
+
   }
   
   public void nextRound(){ //should ONLY run when the round progresses:
     numofRLoons += 5;
     numofILoons += 5;
-    int round = 0;
     
     if (round > 3) {
       numofALoons += 5;
@@ -231,7 +230,7 @@ public class BloonGame extends JPanel
       numofCLoons += 5;
     }
     
-    balloons.clear();
+    //balloons.clear();
     
     for (int i = 0; i < numofRLoons; i++){
       balloons.add(new RookieBalloon(map, diff));
@@ -249,12 +248,25 @@ public class BloonGame extends JPanel
       }
       
       Collections.shuffle(balloons);
+      changeRound = false;
     }
   } 
   
+  public void checkBalloons(){
+    if (round!=0){
+      pause = true;
+      round ++;
+      System.out.println("Round:" + round);
+      changeRound = true;
+      if (pause && changeRound){
+        this.nextRound();
+      }
+    }
+  }
+  
   public void move() 
   {
-    if (myDisplay.getGameOn() && !pause){ //'&& !pause added 
+    if (myDisplay.getGameOn() && !pause){
       for (int i = 0; i < balloonsFinal.size(); i++)
         balloonsFinal.get(i).move();
     }
@@ -269,18 +281,45 @@ public class BloonGame extends JPanel
     
     //Background
     g2d.setColor(Color.GRAY);
-    g2d.fillRect(0, 0, 1100, 750);
-    //perhaps do the menu bar in brown down here?
+    g2d.fillRect(0, 0, 1100, 550);
     
-    if (!myDisplay.getGameOn())
-       myDisplay.paint(g2d);
+    if (!myDisplay.getGameOn()){
+      g2d.setColor(Color.WHITE);
+      g2d.fillRect(0,0, 1100, 750);
+      myDisplay.paint(g2d);
+    }
     else 
     {
       if (time % 100 == 0 && balloons.size() > 0 && !pause)
       {
         balloonsFinal.add(balloons.get(0));
         balloons.remove(0);
+        
+        if (balloonsFinal.size() == 1 && round == 0)
+          round++;
       }
+//      if (round == 0)
+//        round++;
+      
+      ///// removes balloons from list if they pass the finish of the map
+      for (int i = 0; i < balloonsFinal.size(); i++){
+        if (balloonsFinal.get(i).getX() > 1100){ //new
+          balloonsFinal.remove(i);
+          
+          if (balloonsFinal.size() == 0)
+            this.checkBalloons();
+        }
+      }
+      //////
+      
+    //space for round construction
+//    if (balloonsFinal.size() == 0 && round!=0){
+//      pause = true;
+//      round ++;
+//      System.out.println("Round:" + round);
+//      if (!pause)
+//        this.nextRound();
+//    } //else for if the round is 20, then players wins
       
       myMap.paint(g2d);
       for (int i = 0; i < balloonsFinal.size(); i++){
@@ -288,13 +327,15 @@ public class BloonGame extends JPanel
       }
       if (!pause)
         time++;
-     // game menu, enemies, and towers and painted here
-     moneyCreator.paint(g2d);
+      
+      // towers painted here
+      moneyCreator.paint(g2d);
       cannon.paint(g2d);
       simpleTower.paint(g2d);
       missileLauncher.paint(g2d);
       spikeTower.paint(g2d);
       superFighter.paint(g2d);
+      
       if(choseTower == true)
       {
         if (towerChosen == simpleTower)
@@ -341,7 +382,7 @@ public class BloonGame extends JPanel
     frame.setSize(1100, 750);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-   
+    
     while (true)
     {
       p.move();
