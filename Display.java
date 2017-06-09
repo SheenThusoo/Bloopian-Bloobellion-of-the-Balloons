@@ -15,15 +15,16 @@ public class Display {
   private BufferedImage start = null;
   private BufferedImage level = null;
   private BufferedImage instructions = null;
+  private BufferedImage win = null;
+  private BufferedImage lose = null;
   private BufferedImage toDisplay = null;
   
   public Display(){ 
     startScreen = true;
-    //instructionScreen = false;
     gameOn = false;
     
     try {
-      start = ImageIO.read(new File("introScreen.jpg"));
+      start = ImageIO.read(new File("introScreenResized.jpg"));
     } catch (IOException e) {
     }
     try {
@@ -33,6 +34,9 @@ public class Display {
     try {
       level = ImageIO.read(new File("mapScreen.png"));
     } catch (IOException e) { 
+    } try{
+      win = ImageIO.read(new File("winner.jpg"));
+    } catch (IOException e){
     }
     toDisplay = start;
   }
@@ -58,6 +62,11 @@ public class Display {
   public boolean getGameOn()
   {
     return gameOn;
+  }
+  
+  public void endScreen(){
+    gameOn = false;
+    //either win or lose depending on outcome
   }
   
   public void paint(Graphics g2d) {
