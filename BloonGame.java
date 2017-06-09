@@ -193,7 +193,7 @@ public class BloonGame extends JPanel
           }
           towerChoiceMade = true;
         }
-        else 
+         if (x <1100 && y <550)  
         {
           
           arrayX = x/50;
