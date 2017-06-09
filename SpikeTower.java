@@ -18,12 +18,13 @@ public  class SpikeTower extends Tower
     
     this.bg = bg;
   }
-   public void paint(Graphics g)
+  public void paint(Graphics g)
   {
     g.drawImage(spikeTower, x+400, y, null);
   }
-   public void placeTower(int[][] path, int arrayX, int arrayY)
-   {
-     path[arrayY][arrayX] = 9;
-   }
+  public void placeTower(int[][] path, int arrayX, int arrayY)
+  {
+    if (path[arrayY][arrayX] == 0)
+      path[arrayY][arrayX] = 9;
+  }
 }
