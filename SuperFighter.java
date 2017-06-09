@@ -11,12 +11,13 @@ public  class SuperFighter extends Tower
   {
     this.bg = bg;
   }
-   public void paint(Graphics g)
+  public void paint(Graphics g)
   {
     g.drawImage(superFighter, x+500, y, null);
   }
   public void placeTower(int[][] path, int arrayX, int arrayY)
-   {
-     path[arrayY][arrayX] = 10;
-   }
+  {
+    if (path[arrayY][arrayX] == 0)
+      path[arrayY][arrayX] = 10;
+  }
 }
