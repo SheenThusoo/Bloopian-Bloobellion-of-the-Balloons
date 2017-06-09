@@ -89,7 +89,10 @@ public class BloonGame extends JPanel
   int time = 0; //time for spacing balloons, should reset every round
   int round = 0; 
   boolean changeRound = false;
-  boolean pause = true; //when pause is false balloons and towers are paused 
+  boolean pause = true; //when pause is false balloons and towers are paused
+  
+  int lives; //lives and money change by level
+  int money;
   
   public BloonGame(){
     
@@ -103,6 +106,8 @@ public class BloonGame extends JPanel
         if (e.getKeyCode() == KeyEvent.VK_E && !myDisplay.getGameOn()){
           map = easy;
           diff = 'e';
+          money = 200;
+          lives = 100;
           myMap = new Map (map);
           for (int i = 0; i < numofRLoons; i++){
             balloons.add(new RookieBalloon(map, diff));
@@ -112,6 +117,8 @@ public class BloonGame extends JPanel
         if (e.getKeyCode() == KeyEvent.VK_M && !myDisplay.getGameOn()){
           map = medium;
           diff = 'm';
+          money = 150;
+          lives = 50;
           myMap = new Map (map);
           for (int i = 0; i < numofRLoons; i++){
             balloons.add(new RookieBalloon(map, diff));
@@ -121,6 +128,8 @@ public class BloonGame extends JPanel
         if (e.getKeyCode() == KeyEvent.VK_H && !myDisplay.getGameOn()){
           map = hard;
           diff = 'h';
+          money = 100;
+          lives = 25;
           myMap = new Map (map);  
           for (int i = 0; i < numofRLoons; i++){
             balloons.add(new RookieBalloon(map, diff)); 
@@ -219,6 +228,7 @@ public class BloonGame extends JPanel
   }
   
   public void nextRound(){ //should ONLY run when the round progresses:
+    System.out.println("Next Round!");
     numofRLoons += 5;
     numofILoons += 5;
     
@@ -230,37 +240,38 @@ public class BloonGame extends JPanel
       numofCLoons += 5;
     }
     
-    //balloons.clear();
-    
     for (int i = 0; i < numofRLoons; i++){
       balloons.add(new RookieBalloon(map, diff));
-      
-      for (int n = 0; n < numofILoons; n++){
-        balloons.add(new IceBalloon(map, diff)); 
-      }
-      
-      for (int s = 0; s < numofALoons; s++){
-        balloons.add(new AthleticBalloon(map, diff)); 
-      }
-      
-      for (int t = 0; t < numofCLoons; t++){
-        balloons.add(new CommanderBalloon(map, diff)); 
-      }
-      
-      Collections.shuffle(balloons);
-      changeRound = false;
     }
+    for (int n = 0; n < numofILoons; n++){
+      balloons.add(new IceBalloon(map, diff)); 
+    }
+    
+    for (int s = 0; s < numofALoons; s++){
+      balloons.add(new AthleticBalloon(map, diff)); 
+    }
+    
+    for (int t = 0; t < numofCLoons; t++){
+      balloons.add(new CommanderBalloon(map, diff)); 
+    }
+    
+    Collections.shuffle(balloons);
+    changeRound = false;
+    
   } 
   
   public void checkBalloons(){
-    if (round!=0){
+    if (round!=0 && round < 20){
       pause = true;
       round ++;
       System.out.println("Round:" + round);
       changeRound = true;
       if (pause && changeRound){
-        this.nextRound();
+        nextRound();
       }
+    } else {
+      pause = true;
+      System.out.println("YOU WIN!!!");
     }
   }
   
@@ -298,35 +309,35 @@ public class BloonGame extends JPanel
         if (balloonsFinal.size() == 1 && round == 0)
           round++;
       }
-//      if (round == 0)
-//        round++;
       
-      ///// removes balloons from list if they pass the finish of the map
+      // removes balloons from list if they pass the finish of the map
       for (int i = 0; i < balloonsFinal.size(); i++){
         if (balloonsFinal.get(i).getX() > 1100){ //new
           balloonsFinal.remove(i);
+          lives--;
+          
+          if (lives == 0){
+            
           
           if (balloonsFinal.size() == 0)
-            this.checkBalloons();
+            checkBalloons();
         }
       }
-      //////
-      
-    //space for round construction
-//    if (balloonsFinal.size() == 0 && round!=0){
-//      pause = true;
-//      round ++;
-//      System.out.println("Round:" + round);
-//      if (!pause)
-//        this.nextRound();
-//    } //else for if the round is 20, then players wins
       
       myMap.paint(g2d);
-      for (int i = 0; i < balloonsFinal.size(); i++){
-        balloonsFinal.get(i).paint(g2d);
+      for (int a = 0; a < balloonsFinal.size(); a++){
+        balloonsFinal.get(a).paint(g2d);
       }
       if (!pause)
         time++;
+      
+      //paint lives and money
+      Font currentFont = g2d.getFont();
+      Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.4F);
+      g.setFont(newFont);
+      g2d.setColor(Color.BLACK);
+      g2d.drawString("Lives: " + lives, 930, 600);
+      g2d.drawString("Bloonies: " + money, 930, 650);
       
       // towers painted here
       moneyCreator.paint(g2d);
@@ -369,6 +380,7 @@ public class BloonGame extends JPanel
           g2d.drawRect(545, 620 , 55, 55);
         }
       }
+    }
     }
   }
   
