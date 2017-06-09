@@ -11,12 +11,13 @@ public  class Cannon extends Tower
   {
     this.bg = bg;
   }
-   public void paint(Graphics g)
+  public void paint(Graphics g)
   {
     g.drawImage(cannon, x +100, y-5, null);
   }
-   public void placeTower(int[][] path, int arrayX, int arrayY)
-   {
-     path[arrayY][arrayX] = 6;
-   }
+  public void placeTower(int[][] path, int arrayX, int arrayY)
+  {
+    if (path[arrayY][arrayX] == 0)
+      path[arrayY][arrayX] = 6;
+  }
 }
