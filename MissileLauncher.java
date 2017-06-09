@@ -11,12 +11,13 @@ public  class MissileLauncher extends Tower
   {
     this.bg = bg;
   }
-   public void paint(Graphics g)
+  public void paint(Graphics g)
   {
     g.drawImage(missileLauncher, x+200, y, null);
   }
-   public void placeTower(int[][] path, int arrayX, int arrayY)
-   {
-     path[arrayY][arrayX] = 7;
-   }
+  public void placeTower(int[][] path, int arrayX, int arrayY)
+  {
+    if (path[arrayY][arrayX] == 0)
+      path[arrayY][arrayX] = 7;
+  }
 }
