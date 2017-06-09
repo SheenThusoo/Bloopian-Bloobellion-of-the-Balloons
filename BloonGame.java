@@ -317,6 +317,7 @@ public class BloonGame extends JPanel
           lives--;
           
           if (lives == 0){
+          }
             
           
           if (balloonsFinal.size() == 0)
@@ -380,7 +381,6 @@ public class BloonGame extends JPanel
           g2d.drawRect(545, 620 , 55, 55);
         }
       }
-    }
     }
   }
   
