@@ -55,7 +55,7 @@ public class BloonGame extends JPanel
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-  private Color grass = new Color(94, 229, 73);
+  
   private Display myDisplay = new Display();
   private Map myMap;
   private Menu myMenu = new Menu();
@@ -129,7 +129,7 @@ public class BloonGame extends JPanel
           path = medium;
         }
         if (e.getKeyCode() == KeyEvent.VK_H && !myDisplay.getGameOn()){
-          map = hard;
+          map = path = hard;
           diff = 'h';
           money = 100;
           lives = 25;
@@ -137,7 +137,6 @@ public class BloonGame extends JPanel
           for (int i = 0; i < numofRLoons; i++){
             balloons.add(new RookieBalloon(map, diff)); 
           }
-          path = hard;
         }
         if (e.getKeyCode() == KeyEvent.VK_ENTER && myDisplay.getGameOn()){
           if (pause)
@@ -160,7 +159,43 @@ public class BloonGame extends JPanel
         x = e.getX();
         y = e.getY();
         
-        System.out.println(x + "," + y);
+        
+        if(!myDisplay.getGameOn()){
+          myDisplay.mouseClicked(e);
+          //starts levels
+          if (e.getX() > 46 && e.getX() < 348 && e.getY() > 344 && e.getY() < 492){
+            map = easy;
+            diff = 'e';
+            money = 200;
+            lives = 100;
+            myMap = new Map (map);
+            for (int i = 0; i < numofRLoons; i++){
+              balloons.add(new RookieBalloon(map, diff));
+            }
+            path = easy;
+          } else if (e.getX() > 402 && e.getX() < 705 && e.getY() > 344 && e.getY() < 492){
+            map = medium;
+            diff = 'm';
+            money = 150;
+            lives = 50;
+            myMap = new Map (map);
+            for (int i = 0; i < numofRLoons; i++){
+              balloons.add(new RookieBalloon(map, diff));
+            }
+            path = medium;
+          } else if (e.getX() > 749 && e.getX() < 1052 && e.getY() > 344 && e.getY() < 492){
+            map = hard;
+            diff = 'h';
+            money = 100;
+            lives = 25;
+            myMap = new Map (map);
+            //path = hard;
+            for (int i = 0; i < numofRLoons; i++){
+              balloons.add(new RookieBalloon(map, diff)); 
+            }
+            path = hard;
+          } 
+        }
         
         //pause functions but screws with tower controls somehow. the problem might actually be with something else...
         if((x >= 680 && x <= 830) && (y >= 620 && y <= 670) && !pauseClicked){
@@ -181,7 +216,6 @@ public class BloonGame extends JPanel
           if((x >= 50 && x <= 100) && (y >= 625 && y <= 675))
           {
             towerChosen = simpleTower;
-            System.out.println("Simple Tower");
             choseTower = true;
             towerCost = 75;
           }
@@ -189,35 +223,30 @@ public class BloonGame extends JPanel
           if((x >= 150 && x <= 200) && (y >= 625 && y <= 675))
           {
             towerChosen = cannon;
-            System.out.println("Cannon");
             choseTower = true;
             towerCost = 125;
           }
           if((x >= 250 && x <= 300) && (y >= 625 && y <= 675))
           {
             towerChosen = missileLauncher;
-            System.out.println("Missile Launcher");
             choseTower = true;
             towerCost = 150;
           }
           if((x >= 350 && x <= 400) && (y >= 625 && y <= 675))
           {
             towerChosen = moneyCreator;
-            System.out.println("Money Creator");
             choseTower = true;
             towerCost = 500;
           }
           if((x >= 450 && x <= 500) && (y >= 625 && y <= 675))
           {
             towerChosen = spikeTower;
-            System.out.println("Spike Tower");
             choseTower = true;
             towerCost = 125;
           }
           if((x >= 550 && x <= 600) && (y >= 625 && y <= 675))
           {
             towerChosen = superFighter;
-            System.out.println("Super Fighter");
             choseTower = true;
             towerCost = 1000;
           }
@@ -229,8 +258,6 @@ public class BloonGame extends JPanel
           
           arrayX = x/50;
           arrayY = y/50;
-          
-          System.out.println(arrayX + "," + arrayY);
           
           towerChosen.placeTower(path, arrayX, arrayY);
           towerChoiceMade = false;
@@ -256,7 +283,6 @@ public class BloonGame extends JPanel
   }
   
   public void nextRound(){ //should ONLY run when the round progresses:
-    System.out.println("Next Round!");
     numofRLoons += 5;
     numofILoons += 5;
     
@@ -292,7 +318,6 @@ public class BloonGame extends JPanel
     if (round!=0 && round < 25){
       pause = true;
       round ++;
-      System.out.println("Round:" + round);
       changeRound = true;
       money += 100;
       if (pause && changeRound){
@@ -320,10 +345,8 @@ public class BloonGame extends JPanel
                          RenderingHints.VALUE_ANTIALIAS_ON);
     
     //Background
-    g2d.setColor(grass);
-    g2d.fillRect(0, 0, 1100, 750);
-     g2d.setColor(Color.white);
-    g2d.fillRect(0, 550, 1100, 250);
+    g2d.setColor(Color.GRAY);
+    g2d.fillRect(0, 0, 1100, 550);
     
     if (!myDisplay.getGameOn()){
       g2d.setColor(Color.WHITE);
