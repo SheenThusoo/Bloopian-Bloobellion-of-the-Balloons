@@ -320,8 +320,10 @@ public class BloonGame extends JPanel
                          RenderingHints.VALUE_ANTIALIAS_ON);
     
     //Background
-    g2d.setColor(Color.GRAY);
-    g2d.fillRect(0, 0, 1100, 550);
+    g2d.setColor(grass);
+    g2d.fillRect(0, 0, 1100, 750);
+     g2d.setColor(Color.white);
+    g2d.fillRect(0, 550, 1100, 250);
     
     if (!myDisplay.getGameOn()){
       g2d.setColor(Color.WHITE);
