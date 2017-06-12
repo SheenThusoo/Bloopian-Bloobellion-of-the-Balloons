@@ -31,11 +31,11 @@ public  class SimpleTower extends Tower
   }
   public void shootCheck(int[][] path)
   {
-    for (int k = 0; i < 11; k++)
+    for (int k = 0; k < 11; k++)
     {
       for (int j = 0; j < 22; j++)
       {
-        if (m[k][j] == 5)
+        if (path[k][j] == 5)
         {
           x = j * 50;
           y = k * 50;
