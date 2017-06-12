@@ -7,6 +7,8 @@ import java.io.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 public class Display {
   private boolean gameOn;
@@ -15,6 +17,7 @@ public class Display {
   private BufferedImage start = null;
   private BufferedImage level = null;
   private BufferedImage instructions = null;
+  private BufferedImage story = null;
   private BufferedImage win = null;
   private BufferedImage lose = null;
   private BufferedImage toDisplay = null;
@@ -29,6 +32,9 @@ public class Display {
     }
     try {
       instructions = ImageIO.read(new File("instructions.png"));
+    } catch (IOException e) { 
+    } try {
+      story = ImageIO.read(new File("storycopy.png"));
     } catch (IOException e) { 
     }
     try {
@@ -50,8 +56,10 @@ public class Display {
     if (e.getKeyCode() == KeyEvent.VK_SPACE) //anything that spacebar does
     {
       if (startScreen){
-        toDisplay = instructions;
+        toDisplay = story;
         startScreen = false;
+      } else if (toDisplay == story){
+        toDisplay = instructions;
       } else if (toDisplay == instructions){
         toDisplay = level;
       }
@@ -61,6 +69,29 @@ public class Display {
     {
       gameOn = true;
     }
+  }
+  
+  public void mouseClicked(MouseEvent e)
+  {
+    //allows player to click through menus
+    if (e.getX() < 1100 && e.getY() < 750 && (startScreen || toDisplay == story || toDisplay == instructions)) {
+      if (startScreen){
+        toDisplay = story;
+        startScreen = false;
+      } else if (toDisplay == story) {
+        toDisplay = instructions;
+      } else if (toDisplay == instructions){
+        toDisplay = level;
+      }
+    } else if (toDisplay == level){
+      if (e.getX() > 46 && e.getX() < 348 && e.getY() > 344 && e.getY() < 492){
+        gameOn = true;
+      } else if (e.getX() > 402 && e.getX() < 705 && e.getY() > 344 && e.getY() < 492){
+        gameOn = true;
+      } else if (e.getX() > 749 && e.getX() < 1052 && e.getY() > 344 && e.getY() < 492){
+        gameOn = true;
+      }
+    }  
   }
   
   public boolean getGameOn()
