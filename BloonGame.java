@@ -159,41 +159,41 @@ public class BloonGame extends JPanel
         x = e.getX();
         y = e.getY();
         
-        
         if(!myDisplay.getGameOn()){
           myDisplay.mouseClicked(e);
+          
           //starts levels
-          if (e.getX() > 46 && e.getX() < 348 && e.getY() > 344 && e.getY() < 492){
-            map = easy;
-            diff = 'e';
-            money = 200;
-            lives = 100;
-            myMap = new Map (map);
-            for (int i = 0; i < numofRLoons; i++){
-              balloons.add(new RookieBalloon(map, diff));
+          if (myDisplay.isLevel()){
+            if (e.getX() > 46 && e.getX() < 348 && e.getY() > 344 && e.getY() < 492){
+              map = path = easy;
+              diff = 'e';
+              money = 200;
+              lives = 100;
+              myMap = new Map (map);
+              for (int i = 0; i < numofRLoons; i++){
+                balloons.add(new RookieBalloon(map, diff));
+              }
+              path = easy;
+            } else if (e.getX() > 402 && e.getX() < 705 && e.getY() > 344 && e.getY() < 492){
+              map = path = medium;
+              diff = 'm';
+              money = 150;
+              lives = 50;
+              myMap = new Map (map);
+              for (int i = 0; i < numofRLoons; i++){
+                balloons.add(new RookieBalloon(map, diff));
+              }
+              path = medium;
+            } else if (e.getX() > 749 && e.getX() < 1052 && e.getY() > 344 && e.getY() < 492){
+              map = path = hard;
+              diff = 'h';
+              money = 100;
+              lives = 25;
+              myMap = new Map (map);
+              for (int i = 0; i < numofRLoons; i++){
+                balloons.add(new RookieBalloon(map, diff)); 
+              }
             }
-            path = easy;
-          } else if (e.getX() > 402 && e.getX() < 705 && e.getY() > 344 && e.getY() < 492){
-            map = medium;
-            diff = 'm';
-            money = 150;
-            lives = 50;
-            myMap = new Map (map);
-            for (int i = 0; i < numofRLoons; i++){
-              balloons.add(new RookieBalloon(map, diff));
-            }
-            path = medium;
-          } else if (e.getX() > 749 && e.getX() < 1052 && e.getY() > 344 && e.getY() < 492){
-            map = hard;
-            diff = 'h';
-            money = 100;
-            lives = 25;
-            myMap = new Map (map);
-            //path = hard;
-            for (int i = 0; i < numofRLoons; i++){
-              balloons.add(new RookieBalloon(map, diff)); 
-            }
-            path = hard;
           } 
         }
         
