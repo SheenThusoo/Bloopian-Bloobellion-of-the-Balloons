@@ -56,8 +56,9 @@ public class BloonGame extends JPanel
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
   
-  Display myDisplay = new Display();
-  Map myMap;
+  private Display myDisplay = new Display();
+  private Map myMap;
+  private Menu myMenu = new Menu();
   private MoneyCreator  moneyCreator = new MoneyCreator(this);
   private Cannon cannon = new Cannon(this);
   private MissileLauncher missileLauncher = new MissileLauncher(this);
@@ -73,26 +74,28 @@ public class BloonGame extends JPanel
   private Tower towerChosen;
   private boolean choseTower = false;
   private boolean towerChoiceMade = false;
+  private int towerCost;
   
-  ArrayList <Enemy> balloons = new ArrayList <Enemy>();
-  ArrayList <Enemy> balloonsFinal = new ArrayList  <Enemy>();
-  int numofCLoons = 0;
-  int numofRLoons = 10;
-  int numofILoons = 0;
-  int numofALoons = 0;
-  int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
+  private ArrayList <Enemy> balloons = new ArrayList <Enemy>();
+  private ArrayList <Enemy> balloonsFinal = new ArrayList  <Enemy>();
+  private int numofCLoons = 0;
+  private int numofRLoons = 10;
+  private int numofILoons = 0;
+  private int numofALoons = 0;
+  private int numOfLoons = numofRLoons + numofILoons + numofALoons + numofCLoons;
   
-  int[][] map;
-  char diff;
-  boolean diffChosen; 
+  private int[][] map;
+  private char diff;
+  private boolean diffChosen;
   
-  int time = 0; //time for spacing balloons, should reset every round
-  int round = 0; 
-  boolean changeRound = false;
-  boolean pause = true; //when pause is false balloons and towers are paused
+  private int time = 0; //time for spacing balloons, should reset every round
+  private int round = 0; 
+  private boolean changeRound = false;
+  private boolean pause = true; //when pause is false balloons and towers are paused
+  private boolean pauseClicked = false;
   
-  int lives; //lives and money change by level
-  int money;
+  private int lives; //lives and money change by level
+  private int money;
   
   public BloonGame(){
     
@@ -159,13 +162,28 @@ public class BloonGame extends JPanel
         
         System.out.println(x + "," + y);
         
-        if(!towerChoiceMade)
+        //pause functions but screws with tower controls somehow. the problem might actually be with something else...
+        if((x >= 680 && x <= 830) && (y >= 620 && y <= 670) && !pauseClicked){
+          pauseClicked = true;
+          if (pause){
+            pause = false;
+            pauseClicked = false;
+          }
+          else {
+            pause = true;
+            pauseClicked = false;
+          }
+        }
+        pauseClicked = false;
+        
+        if(!towerChoiceMade && x <610 && y >625)
         {
           if((x >= 50 && x <= 100) && (y >= 625 && y <= 675))
           {
             towerChosen = simpleTower;
             System.out.println("Simple Tower");
             choseTower = true;
+            towerCost = 75;
           }
           
           if((x >= 150 && x <= 200) && (y >= 625 && y <= 675))
@@ -173,35 +191,40 @@ public class BloonGame extends JPanel
             towerChosen = cannon;
             System.out.println("Cannon");
             choseTower = true;
+            towerCost = 125;
           }
           if((x >= 250 && x <= 300) && (y >= 625 && y <= 675))
           {
             towerChosen = missileLauncher;
             System.out.println("Missile Launcher");
             choseTower = true;
+            towerCost = 150;
           }
           if((x >= 350 && x <= 400) && (y >= 625 && y <= 675))
           {
             towerChosen = moneyCreator;
             System.out.println("Money Creator");
             choseTower = true;
+            towerCost = 500;
           }
           if((x >= 450 && x <= 500) && (y >= 625 && y <= 675))
           {
             towerChosen = spikeTower;
             System.out.println("Spike Tower");
             choseTower = true;
+            towerCost = 125;
           }
           if((x >= 550 && x <= 600) && (y >= 625 && y <= 675))
           {
             towerChosen = superFighter;
             System.out.println("Super Fighter");
             choseTower = true;
+            towerCost = 1000;
           }
           towerChoiceMade = true;
         }
-        if (x <1100 && y <550) 
-          //else 
+        
+        if (towerChoiceMade && towerCost <= money) 
         {
           
           arrayX = x/50;
@@ -211,6 +234,11 @@ public class BloonGame extends JPanel
           
           towerChosen.placeTower(path, arrayX, arrayY);
           towerChoiceMade = false;
+          money = money - towerCost;
+        } else if (towerCost > money && towerChoiceMade)
+        {
+          towerChoiceMade = false;
+          myMenu.moneyError();
         }
       }
       public void mousePressed(MouseEvent e){
@@ -261,17 +289,18 @@ public class BloonGame extends JPanel
   } 
   
   public void checkBalloons(){
-    if (round!=0 && round < 20){
+    if (round!=0 && round < 25){
       pause = true;
       round ++;
       System.out.println("Round:" + round);
       changeRound = true;
+      money += 100;
       if (pause && changeRound){
         nextRound();
       }
     } else {
       pause = true;
-      System.out.println("YOU WIN!!!");
+      myDisplay.endScreen(lives);
     }
   }
   
@@ -317,8 +346,9 @@ public class BloonGame extends JPanel
           lives--;
           
           if (lives == 0){
+            pause = true;
+            myDisplay.endScreen(lives);
           }
-            
           
           if (balloonsFinal.size() == 0)
             checkBalloons();
@@ -332,13 +362,8 @@ public class BloonGame extends JPanel
       if (!pause)
         time++;
       
-      //paint lives and money
-      Font currentFont = g2d.getFont();
-      Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.4F);
-      g.setFont(newFont);
-      g2d.setColor(Color.BLACK);
-      g2d.drawString("Lives: " + lives, 930, 600);
-      g2d.drawString("Bloonies: " + money, 930, 650);
+      //paints menu text
+      myMenu.paint(g2d, lives, round, money, pause);
       
       // towers painted here
       moneyCreator.paint(g2d);
@@ -350,34 +375,29 @@ public class BloonGame extends JPanel
       
       if(choseTower == true)
       {
+        g2d.setColor(Color.RED);
         if (towerChosen == simpleTower)
         {
-          g2d.setColor(Color.RED);
           g2d.drawRect(45, 620 , 55, 55);
         }
         else if (towerChosen == cannon)
         {
-          g2d.setColor(Color.RED);
           g2d.drawRect(145, 620 , 55, 55);
         }
         else if (towerChosen == missileLauncher)
         {
-          g2d.setColor(Color.RED);
           g2d.drawRect(245, 620 , 55, 55);
         }
         else if (towerChosen == moneyCreator)
         {
-          g2d.setColor(Color.RED);
           g2d.drawRect(345, 620 , 55, 55);
         }
         else if (towerChosen == spikeTower)
         {
-          g2d.setColor(Color.RED);
           g2d.drawRect(445, 620 , 55, 55);
         }
         else if (towerChosen == superFighter)
         {
-          g2d.setColor(Color.RED);
           g2d.drawRect(545, 620 , 55, 55);
         }
       }
