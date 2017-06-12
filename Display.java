@@ -37,7 +37,11 @@ public class Display {
     } try{
       win = ImageIO.read(new File("winner.jpg"));
     } catch (IOException e){
+    } try{
+      lose = ImageIO.read(new File("PLACEHOLDER.jpg"));
+    } catch (IOException e){
     }
+    
     toDisplay = start;
   }
   
@@ -64,9 +68,13 @@ public class Display {
     return gameOn;
   }
   
-  public void endScreen(){
+  public void endScreen(int lives){
     gameOn = false;
-    //either win or lose depending on outcome
+    
+    if (lives == 0)
+      toDisplay = lose;
+    else 
+      toDisplay = win;
   }
   
   public void paint(Graphics g2d) {
