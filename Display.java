@@ -38,7 +38,7 @@ public class Display {
       win = ImageIO.read(new File("winner.jpg"));
     } catch (IOException e){
     } try{
-      lose = ImageIO.read(new File("PLACEHOLDER.jpg"));
+      lose = ImageIO.read(new File("loseScreen.png"));
     } catch (IOException e){
     }
     
