@@ -55,7 +55,7 @@ public class BloonGame extends JPanel
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, 
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-  
+  private Color grass = new Color(94, 229, 73);
   private Display myDisplay = new Display();
   private Map myMap;
   private Menu myMenu = new Menu();
