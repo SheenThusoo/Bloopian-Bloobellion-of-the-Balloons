@@ -5,6 +5,7 @@ import javax.imageio.*;
 import java.io.*;
 
 public abstract class Enemy {
+  
   private BufferedImage img = null;
   private ImageObserver observer = null;
   private int x = 0;
@@ -44,19 +45,19 @@ public abstract class Enemy {
         
       }
     } else if (type == 'i'){
-      try {
+       try {
         img = ImageIO.read(new File("iceballoon.png"));
       } catch (IOException e) {
         System.out.println(e);
       }
     } else if (type == 'a'){
-      try {
+       try {
         img = ImageIO.read(new File("athleticballoon.png"));
       } catch (IOException e) {
         System.out.println(e);
       }
     } else {
-      try {
+       try {
         img = ImageIO.read(new File("commanderballoon.png"));
       } catch (IOException e) {
         System.out.println(e);
@@ -65,17 +66,9 @@ public abstract class Enemy {
     
   }
   
-  //////////////////////////////////////////////////////////////////////////////////
-  public int returnX()
-  {
+  public int getX() {
     return x;
   }
-  
-  public int returnY()
-  {
-    return y;
-  }
-  //////////////////////////////////////////////////////////////////////////////////
   
   public void move () {
     
@@ -102,9 +95,9 @@ public abstract class Enemy {
       } else {
       }
     }
-    x = x + xa; 
-    y = y + ya;
-    count += speed;
+      x = x + xa; 
+      y = y + ya;
+      count += speed;
     
   }
   
