@@ -11,7 +11,7 @@ public  class SimpleTower extends Tower
 {
   private int x = 0;
   private int y = 0;
-  ArrayList <Enemy> balloonsFinal;
+  private ArrayList <Enemy> balloonsFinal;
   private boolean shoot = false;
   
   public SimpleTower(BloonGame bg, ArrayList <Enemy> balloonsFinal)
