@@ -1,0 +1,7 @@
+Notes for Tower Stuff: 
+
+- Essentially the list should be looped within the move method each time so each tower checks if there's a balloon nearby shoots
+appropriately
+- We also have to add in animation for the shooting
+- Each tower's move should probably call shootcheck to see if it should shoot. 
+- TowerTrial is irrelevant now
